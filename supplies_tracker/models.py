@@ -1,3 +1,4 @@
+from hamlpy.views.generic import HamlExtensionTemplateView
 from django.db import models
 from django.utils import timezone
 
