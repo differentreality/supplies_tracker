@@ -1,6 +1,10 @@
 - load bootstrap3
-- bootstrap_css
-- bootstrap_messages
-
-.container#content
-  - block body
+%html
+  %head
+    - bootstrap_css
+    - bootstrap_messages
+  %body
+    .container#content
+      .row
+        .col-md-12
+          - block content

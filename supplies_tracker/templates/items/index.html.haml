@@ -1,6 +1,29 @@
 - extends 'application.html.haml'
 
-- block body
-  hi
-  %label.btn.btn-primary
-    hi
+- block content
+  .row
+    .col-md-12
+      .page-header
+        %h1
+          This is a list of all available items
+          %a.pull-right.btn.btn-primary{ href: "{% url 'items_new' %}" }
+            Add
+        .text-muted
+          You can use any of those items to add them to your storage.
+          If you need additional items, please add them
+    .row
+      .col-md-12
+        %table.table.table-striped.table-hover#items-table
+          %thead
+            %th No
+            %th Name
+            %th Description
+            %th Latest purschase (euro)
+
+          %tbody
+            - for index, item in enum_items
+              %tr
+                %td= index
+                %td= item.name
+                %td
+                %td

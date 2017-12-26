@@ -20,5 +20,8 @@ from . import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'', include('item.urls')),
-    url(r'^$', views.item_list, name='item_list'),
+    url(r'^$', views.items_index, name='items_index'), # change the index page
+    url('items/new', views.items_new, name='items_new'),
+    url('items', views.items_index, name='items_index'),
+
 ]
