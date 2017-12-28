@@ -17,6 +17,8 @@ class Space(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     description = models.TextField
     address = models.CharField(max_length=50)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
