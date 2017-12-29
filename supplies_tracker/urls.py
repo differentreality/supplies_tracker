@@ -23,5 +23,8 @@ urlpatterns = [
     url(r'^$', views.items_index, name='items_index'), # change the index page
     url('items/new', views.items_new, name='items_new'),
     url('items', views.items_index, name='items_index'),
-
+    url('storages/new', views.storages_new, name='storages_new'),
+    url('storages', views.storages_index, name='storages_index'),
+    url('spaces/new', views.spaces_new, name='spaces_new'),
+    url('spaces', views.spaces_index, name='spaces_index'),
 ]

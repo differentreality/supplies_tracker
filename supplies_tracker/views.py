@@ -1,8 +1,11 @@
 # from hamlpy.views.generic import HamlExtensionTemplateView
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Item
+from .models import Item,Storage,Space
 from .forms import item_form
+from .forms import storage_form
+from .forms import space_form
+
 
 def items_index(request):
   items = Item.objects.all()
@@ -29,3 +32,55 @@ def items_new(request):
         form = item_form()
 
     return render(request, 'items/new.html.haml', { 'form': form })
+
+def storages_index(request):
+  storages = Storage.objects.all()
+  enum_storages = enumerate(storages)
+  return render(request, 'storages/index.html.haml', { 'enum_storages': enum_storages })
+
+def storages_new(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = storage_form(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            obj = Storage(**form.cleaned_data)
+            obj.save()
+
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/storages')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = storage_form()
+
+    return render(request, 'storages/new.html.haml', { 'form': form })
+
+def spaces_index(request):
+  spaces = Space.objects.all()
+  enum_spaces = enumerate(spaces)
+  return render(request, 'spaces/index.html.haml', { 'enum_spaces': enum_spaces })
+
+def spaces_new(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = space_form(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            obj = Space(**form.cleaned_data)
+            obj.save()
+
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/spaces')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = space_form()
+
+    return render(request, 'spaces/new.html.haml', { 'form': form })
