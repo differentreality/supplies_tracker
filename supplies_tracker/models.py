@@ -1,6 +1,8 @@
+from __future__ import unicode_literals
 from hamlpy.views.generic import HamlExtensionTemplateView
 from django.db import models
 from django.utils import timezone
+
 
 
 class Item(models.Model):
@@ -15,19 +17,18 @@ class Item(models.Model):
 
 class Space(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
-    description = models.TextField
+    description = models.TextField(null=True)
     address = models.CharField(max_length=50)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6,null=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 class Storage(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
-    capacity = models.FloatField
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    space_id = models.ForeignKey(Space, on_delete=models.CASCADE)
+    space_id = models.ForeignKey(Space, on_delete=models.CASCADE,null=True)
 
 class Items_Storage(models.Model) :
     item = models.ForeignKey(Item,related_name= 'content')
