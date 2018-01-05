@@ -1,0 +1,25 @@
+.container-fluid
+  .row
+    .col-md-12
+      .navbar.navbar-bottom
+        %hr
+        .col-md-8
+          %p{ style: 'text-align: center' }
+            This tool is released under the MIT license.
+            You can run, copy, distribute, study, change and improve it.
+            The source code and the developers are on
+            %a{ href: "https://github.com/differentreality/supplies_tracker" }
+              github
+        .col-md-4.text-right
+          %a{ href: 'https://www.facebook.com/kwh.report/',  target: '_blank', title: 'Επισκεφτείτε τη σελίδα μας στο Facebook' }
+            %i.fa.fa-facebook-square.fa-3x
+          .fb-like{ 'data-href': 'https://www.facebook.com/kwh.report/', 'data-layout': 'button', 'data-action': 'like', 'data-size': 'large', 'data-show-faces': 'true', 'data-share': 'true' }
+:javascript
+
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.9&appId=1767355980143436";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
