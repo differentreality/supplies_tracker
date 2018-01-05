@@ -1,3 +1,31 @@
 - extends 'application.html.haml'
 
 - block content
+  .row
+    .col-md-12
+      .page-header
+        %h1
+          This is a list of all available storages
+          %a.pull-right.btn.btn-primary{ href: "{% url 'storages_new' %}" }
+            Add
+        .text-muted
+          You can use any of those already created storages.
+          If you need additional storages, please add them
+    .row
+      .col-md-12
+        %table.table.table-striped.table-hover#storages-table
+          %thead
+            %th No
+            %th Name
+            %th
+
+
+          %tbody
+            - for index, storage in enum_storages
+              %tr
+                %td= index
+                %td= storage.name
+                %td
+                %td
+
+

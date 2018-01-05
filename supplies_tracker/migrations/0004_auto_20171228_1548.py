@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='space',
             name='longitude',
-            field=models.DecimalField(decimal_places=6, default=django.utils.timezone.now, max_digits=9),
+            field=models.DecimalField(decimal_places=6, default=0, max_digits=9),
             preserve_default=False,
         ),
     ]
