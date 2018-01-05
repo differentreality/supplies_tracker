@@ -1,11 +1,9 @@
 # from hamlpy.views.generic import HamlExtensionTemplateView
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Item,Storage,Space
-from .forms import item_form
-from .forms import storage_form
-from .forms import space_form
-from django.contrib.auth import login, authenticate
+from .models import Item, Storage, Space
+from .forms import item_form, storage_form, space_form
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from supplies_tracker.forms import SignUpForm
@@ -63,7 +61,7 @@ def storages_new(request):
     return render(request, 'storages/new.html.haml', { 'form': form })
 
 def spaces_index(request):
-  spaces = Space.objects.all()
+  spaces = Space.objects.filter(user_id=request.user.id)
   enum_spaces = enumerate(spaces)
   return render(request, 'spaces/index.html.haml', { 'enum_spaces': enum_spaces })
 
@@ -75,6 +73,7 @@ def spaces_new(request):
         # check whether it's valid:
         if form.is_valid():
             obj = Space(**form.cleaned_data)
+            obj.user = request.user
             obj.save()
 
             # process the data in form.cleaned_data as required
@@ -88,11 +87,8 @@ def spaces_new(request):
 
     return render(request, 'spaces/new.html.haml', { 'form': form })
 
-
 def home(request):
     return render(request, 'home.html')
-
-
 
 def signup(request):
     if request.method == 'POST':
@@ -107,3 +103,6 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
