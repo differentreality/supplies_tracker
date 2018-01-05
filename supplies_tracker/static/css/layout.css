@@ -4,7 +4,10 @@
 
 body {
   padding-top: 90px !important;
-  margin-bottom: 60px !important;
+}
+
+footer {
+  padding-top: 90px !important;
 }
 
 .navbar li a {

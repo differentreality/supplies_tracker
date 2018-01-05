@@ -88,7 +88,7 @@ def spaces_new(request):
     return render(request, 'spaces/new.html.haml', { 'form': form })
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'home.html.haml')
 
 def signup(request):
     if request.method == 'POST':
@@ -102,7 +102,7 @@ def signup(request):
             return redirect('home')
     else:
         form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'signup.html.haml', { 'form': form })
 
 def logout_view(request):
     logout(request)

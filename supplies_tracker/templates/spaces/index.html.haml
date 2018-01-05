@@ -21,9 +21,10 @@
             %th Address
 
           %tbody
-            - for index, space in enum_spaces
+            - for _index, space in enum_spaces
               %tr
-                %td= index
+                %td
+                  =  forloop.counter
                 %td= space.name
                 %td=space.description
                 %td=space.address
