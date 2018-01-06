@@ -7,11 +7,15 @@
         .page-header
           %h1
             Add new storage
+            - if space
+              for
+              = space.name
     .row
-      .col-md-12
+      .col-md-6
         %form{ role: 'form', method: 'post' }
           - csrf_token
           = form|bootstrap
+          %input{ type: 'hidden', name: 'space_id', value: "{{ space.id }}" }
 
           %button.btn.btn-success{ type: 'submit' }
             Save

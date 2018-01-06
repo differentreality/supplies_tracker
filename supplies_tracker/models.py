@@ -15,7 +15,7 @@ class Item(models.Model):
     reimbursement = models.FloatField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    items = models.ManyToManyField('Storage',through='Items_Storage',related_name='item')
+    storages = models.ManyToManyField('Storage', through='Items_Storage', related_name='Storage')
 
 class Space(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
@@ -31,11 +31,12 @@ class Storage(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    space_id = models.ForeignKey(Space, on_delete=models.CASCADE,null=True)
+    space = models.ForeignKey(Space, on_delete=models.CASCADE,null=True)
+    items = models.ManyToManyField('Item', through='Items_Storage', related_name='Item')
 
 class Items_Storage(models.Model) :
-    item = models.ForeignKey(Item,related_name= 'content')
-    storage = models.ForeignKey(Storage, related_name='content')
+    item = models.ForeignKey(Item)
+    storage = models.ForeignKey(Storage)
     date_added = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(null=False,blank=False)
     price_bought = models.FloatField

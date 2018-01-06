@@ -1,4 +1,23 @@
 - extends 'application.html.haml'
 
 - block content
-  
+
+  .row
+    .col-md-12
+      .page-header
+        %h2= space.name
+        .text-muted
+          = space.description
+  .row
+    .col-md-12
+      .page-header
+        %h3
+          Available storages
+          ({{ storages.count }})
+          %a.pull-right.btn.btn-primary{ href: "{% url 'storages_new' %}?space_id={{ space.id }}" }
+            .fa.fa-plus
+            Add Storage
+      - if storages
+        {% include 'storages/_storages_table.html.haml' %}
+      - else
+        There are no available storages. Please add one!

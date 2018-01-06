@@ -1,4 +1,38 @@
 - extends 'application.html.haml'
 
 - block content
-  
+
+  .row
+    .col-md-12
+      .page-header
+        %h2
+          = storage.name
+
+          %a.pull-right.btn.btn-primary{ href: "{% url 'items_new' %}?storage_id={{ storage.id }}" }
+            .fa.fa-plus
+            Item
+        .text-muted
+          = storage.description
+  .row
+    .col-md-12
+      %h3 Items in storage
+
+      %table.table.table-striped.table-hover#spaces-table
+        %thead
+          %th No
+          %th Name
+          %th Quantity
+          %th Price (bought)
+          %th Price (reiumbrusemnt)
+          %th Actions
+
+        %tbody
+          - for item in items
+            %tr
+              %td
+                =  forloop.counter
+              %td= item.name
+              %td= item.description
+              %td= item.price_bought
+              %td= item.reimbursement
+              %td

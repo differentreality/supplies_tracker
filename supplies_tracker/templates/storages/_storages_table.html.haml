@@ -1,0 +1,17 @@
+%table.table.table-striped.table-hover#spaces-table
+  %thead
+    %th No
+    %th Name
+    %th Description
+    %th Address
+    %th Actions
+
+  %tbody
+    - for storage in storages
+      %tr
+        %td
+          =  forloop.counter
+        %td= storage.name
+        %td= storage.description
+        %td= storage.address
+        %td
