@@ -18,20 +18,24 @@ from django.contrib import admin
 from . import views
 from supplies_tracker import views as supplies_tracker_views
 from django.contrib.auth import views as auth_views
-
+# from django.urls import path
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'', include('item.urls')),
     url(r'^$', views.home, name='home.html.haml'), # change the index page
+
+    url(r'items$', views.items_index, name='items_index'),
     url('items/new', views.items_new, name='items_new'),
-    url('items', views.items_index, name='items_index'),
-    url('storages/new', views.storages_new, name='storages_new'),
-    url('storages', views.storages_index, name='storages_index'),
+
+    url(r'storages$', views.storages_index, name='storages_index'),
+    url(r'^storages/new/$', views.storages_new, name='storages_new'),
+    url(r'^storages/([0-9])/$', views.storages_show, name='storages_show'),
+
+    url(r'spaces$', views.spaces_index, name='spaces_index'),
     url('spaces/new', views.spaces_new, name='spaces_new'),
-    url('spaces', views.spaces_index, name='spaces_index'),
-    url(r'^login/$', auth_views.login, { 'template_name': 'login.html.haml' }, name='login'),
+    url(r'^spaces/([0-9])/$', views.spaces_show, name='spaces_show'),
+
+    url(r'^login/$', supplies_tracker_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, { 'next_page': 'login' }, name='logout'),
-    url(r'^signup/$', supplies_tracker_views.signup, name='signup'),
     url(r'^signup/$', supplies_tracker_views.signup, name='signup'),
 ]

@@ -19,6 +19,7 @@
             %th Name
             %th Description
             %th Address
+            %th Actions
 
           %tbody
             - for _index, space in enum_spaces
@@ -28,3 +29,14 @@
                 %td= space.name
                 %td=space.description
                 %td=space.address
+                %td
+                  .btn-group
+                    %a.btn.btn-success{ href: "{% url 'spaces_show' space.id %}" }
+                      .fa.fa-eye
+                    %a.btn.btn-primary{ href: "{% url 'login' %}" }
+                      .fa.fa-edit
+                    %a.btn.btn-danger{}
+                      .fa.fa-times
+                    %a.btn.btn-primary{ href: "{% url 'storages_new' %}?space_id={{ space.id }}" }
+                      .fa.fa-plus
+                        Storage

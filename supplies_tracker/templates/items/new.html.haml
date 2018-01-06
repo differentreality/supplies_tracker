@@ -13,5 +13,7 @@
           - csrf_token
           = form|bootstrap
 
+          %input{ type: 'hidden', name: 'storage_id', value: "{{ storage.id }}" }
+
           %button.btn.btn-success{ type: 'submit' }
             Save

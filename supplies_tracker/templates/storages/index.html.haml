@@ -5,7 +5,7 @@
     .col-md-12
       .page-header
         %h1
-          This is a list of all available storages
+          Storages({{storages.count}})
           %a.pull-right.btn.btn-primary{ href: "{% url 'storages_new' %}" }
             Add
         .text-muted
@@ -17,15 +17,24 @@
           %thead
             %th No
             %th Name
-            %th
+            %th In
+            %th Actions
 
 
           %tbody
-            - for index, storage in enum_storages
+            - for storage in storages
               %tr
-                %td= index
+                %td= forloop.counter
                 %td= storage.name
                 %td
+                  = storage.space.name
+                  .text-muted
+                    = storage.space.description
                 %td
-
-
+                  .btn-group
+                    %a.btn.btn-success{ href: "{% url 'storages_show' storage.id %}" }
+                      .fa.fa-eye
+                    %a.btn.btn-primary{ href: ' ' }
+                      .fa.fa-edit
+                    %a.btn.btn-danger{ href: ' ' }
+                      .fa.fa-times
