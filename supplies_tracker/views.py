@@ -16,18 +16,24 @@ def items_index(request):
 
 @login_required
 def items_new(request):
-    storage_id = request.GET['storage_id']
-    storage = Storage.objects.get(id=storage_id)
-    print('storage')
-    print(storage.name)
+    # storage_id = None
+    # if 'is_private' in request.POST:
+
+    if 'storage_id' in request.GET:
+        storage_id = request.GET['storage_id']
+        storage = Storage.objects.get(id=storage_id)
+    else:
+        storage = None
 
     if request.method == 'POST':
         form = item_form(request.POST)
         if form.is_valid():
             obj = Item(**form.cleaned_data)
             obj.save()
-            content = Items_Storage.objects.create(item=obj, storage=storage, quantity=0)
-            content.save()
+            if storage is not None:
+                content = Items_Storage.objects.create(item=obj, storage=storage, quantity=0)
+                content.save()
+
             return HttpResponseRedirect('/items')
     else:
         form = item_form()
