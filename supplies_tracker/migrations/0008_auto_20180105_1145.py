@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('auth', '0010_auto_20171230_0656'),
+
         ('supplies_tracker', '0007_space_description'),
     ]
 
