@@ -8,106 +8,167 @@ from django.contrib.auth import logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-
 @login_required
 def items_index(request):
   items = Item.objects.all()
   return render(request, 'items/index.html.haml', { 'items': items })
 
-@login_required
-def items_new(request):
-    # storage_id = None
-    # if 'is_private' in request.POST:
+class ItemView(generic.ListView):
+    template_name = 'items/index.html.haml'
+    context_object_name = 'all_items'
 
-    if 'storage_id' in request.GET:
-        storage_id = request.GET['storage_id']
-        storage = Storage.objects.get(id=storage_id)
-    else:
-        storage = None
+    def get_queryset(self):
+        return Item.objects.all()
 
-    if request.method == 'POST':
-        form = item_form(request.POST)
-        if form.is_valid():
-            obj = Item(**form.cleaned_data)
-            obj.save()
-            if storage is not None:
-                content = Items_Storage.objects.create(item=obj, storage=storage, quantity=0)
-                content.save()
+    # if 'storage_id' in request.GET:
+    #     storage_id = request.GET['storage_id']
+    #     storage = Storage.objects.get(id=storage_id)
+    # else:
+    #     storage = None
+    #
+    # if request.method == 'POST':
+    #     form = item_form(request.POST)
+    #     if form.is_valid():
+    #         obj = Item(**form.cleaned_data)
+    #         obj.save()
+    #         if storage is not None:
+    #             content = Items_Storage.objects.create(item=obj, storage=storage, quantity=0)
+    #             content.save()
+    #
+    #         return HttpResponseRedirect('/items')
+    # else:
+    #     form = item_form()
+    #
+    # return render(request, 'items/new.html.haml', { 'form': form })
 
-            return HttpResponseRedirect('/items')
-    else:
-        form = item_form()
+class ItemCreate(CreateView):
+    model = Item
+    fields = ['name','price_bought','description','reimbursement']
 
-    return render(request, 'items/new.html.haml', { 'form': form })
+class ItemUpdate(UpdateView):
+    model = Item
+    fields = ['name', 'price_bought', 'description', 'reimbursement']
 
-@login_required
-def storages_index(request):
-  user_spaces = Space.objects.filter(user_id=request.user.id)
-  user_spaces = user_spaces.values_list('id', flat=True)
-  storages = Storage.objects.filter(space_id__in=user_spaces)
-  return render(request, 'storages/index.html.haml', { 'storages': storages, 'user_spaces': user_spaces })
+class SpaceView(generic.ListView):
+    template_name = 'spaces/index.html.haml'
+    context_object_name = 'all_spaces'
 
-def storages_show(request, storage_id):
-    try:
-        storage = Storage.objects.get(id=storage_id)
-        items = storage.items.all()
-    except Storage.DoesNotExist:
-        storage = None
-        items = None
+    def get_queryset(self):
+        return Space.objects.all()
 
-    # items = Storage.objects.values_list('items')
-    # items = Storage.objects.filter(items)
+class SpaceDelete(DeleteView):
+    model = Space
+    success_url = reverse_lazy('spaces_index')
 
-    # items = Item.objects.filter(storages=storage)
-    if storage is None:
-        return render(request, 'error.html.haml' )
-    else:
-        return render(request, 'storages/show.html.haml', { 'storage': storage, 'items': items } )
+class SpaceUpdate(UpdateView):
+    model = Space
+    fields = ['name', 'address', 'description']
+    template_name = 'spaces/edit.html.haml'
+    success_url = reverse_lazy('spaces_index')
 
-@login_required
-def storages_new(request):
-    space_id = request.GET['space_id']
-    space = Space.objects.get(id=space_id)
+# class SpaceCreate(CreateView):
+#     model = Space
+#     fields = ['name','address','description']
 
-    if request.method == 'POST':
-        form = storage_form(request.POST)
-        if form.is_valid():
-            obj = Storage(**form.cleaned_data)
-            obj.space = space
-            obj.save()
+class StorageView(generic.ListView):
+    template_name = 'storages/index.html.haml'
+    context_object_name = 'all_storages'
 
-            return HttpResponseRedirect('/storages')
-    else:
-        form = storage_form()
+    def get_queryset(self):
+        return Storage.objects.all()
 
-    return render(request, 'storages/new.html.haml', { 'form': form, 'space': space })
+class StorageCreate(CreateView):
+    model = Storage
+    fields = ['name']
 
-@login_required
-def spaces_index(request):
-  spaces = Space.objects.filter(user_id=request.user.id)
-  enum_spaces = enumerate(spaces)
-  return render(request, 'spaces/index.html.haml', { 'enum_spaces': enum_spaces })
+class StorageUpdate(UpdateView):
+    model = Storage
+    fields = ['name']
 
-@login_required
-def spaces_show(request, space_id):
-  space = Space.objects.get(id=space_id)
-  storages = Storage.objects.filter(space_id=space_id)
-  return render(request, 'spaces/show.html.haml', { 'space': space, 'storages': storages } )
 
-@login_required
-def spaces_new(request):
-    if request.method == 'POST':
-        form = space_form(request.POST)
-        if form.is_valid():
-            obj = Space(**form.cleaned_data)
-            obj.user = request.user
-            obj.save()
+# @login_required
+# def spaces_new(request):
+#     if request.method == 'POST':
+#         form = space_form(request.POST)
+#         if form.is_valid():
+#             obj = Space(**form.cleaned_data)
+#             obj.user = request.user
+#             obj.save()
+#
+#             return HttpResponseRedirect('/spaces')
+#     else:
+#         form = space_form()
+#
+#     return render(request, 'spaces/new.html.haml', { 'form': form })
 
-            return HttpResponseRedirect('/spaces')
-    else:
-        form = space_form()
-
-    return render(request, 'spaces/new.html.haml', { 'form': form })
+# @login_required
+# def storages_index(request):
+#   user_spaces = Space.objects.filter(user_id=request.user.id)
+#   user_spaces = user_spaces.values_list('id', flat=True)
+#   storages = Storage.objects.filter(space_id__in=user_spaces)
+#   return render(request, 'storages/index.html.haml', { 'storages': storages, 'user_spaces': user_spaces })
+#
+# def storages_show(request, storage_id):
+#     try:
+#         storage = Storage.objects.get(id=storage_id)
+#         items = storage.items.all()
+#     except Storage.DoesNotExist:
+#         storage = None
+#         items = None
+#
+#     # items = Storage.objects.values_list('items')
+#     # items = Storage.objects.filter(items)
+#
+#     # items = Item.objects.filter(storages=storage)
+#     if storage is None:
+#         return render(request, 'error.html.haml' )
+#     else:
+#         return render(request, 'storages/show.html.haml', { 'storage': storage, 'items': items } )
+#
+# @login_required
+# def storages_new(request):
+#     space_id = request.GET['space_id']
+#     space = Space.objects.get(id=space_id)
+#
+#     if request.method == 'POST':
+#         form = storage_form(request.POST)
+#         if form.is_valid():
+#             obj = Storage(**form.cleaned_data)
+#             obj.space = space
+#             obj.save()
+#
+#             return HttpResponseRedirect('/storages')
+#     else:
+#         form = storage_form()
+#
+#     return render(request, 'storages/new.html.haml', { 'form': form, 'space': space })
+#
+# @login_required
+# def spaces_index(request):
+#   spaces = Space.objects.filter(user_id=request.user.id)
+#   enum_spaces = enumerate(spaces)
+#   return render(request, 'spaces/index.html.haml', { 'enum_spaces': enum_spaces })
+#
+# @login_required
+# def spaces_show(request, space_id):
+#   space = Space.objects.get(id=space_id)
+#   storages = Storage.objects.filter(space_id=space_id)
+#   return render(request, 'spaces/show.html.haml', { 'space': space, 'storages': storages } )
+#
+# @login_required
+# def spaces_new(request):
+#     if request.method == 'POST':
+#         form = space_form(request.POST)
+#         if form.is_valid():
+#             obj = Space(**form.cleaned_data)
+#             obj.user = request.user
+#             obj.save()
+#
+#             return HttpResponseRedirect('/spaces')
+#     else:
+#         form = space_form()
+#
+#     return render(request, 'spaces/new.html.haml', { 'form': form })
 
 def home(request):
     return render(request, 'home.html.haml')
