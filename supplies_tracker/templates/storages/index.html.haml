@@ -37,4 +37,7 @@
                     %a.btn.btn-primary{ href: ' ' }
                       .fa.fa-edit
                     %a.btn.btn-danger{ href: ' ' }
+                    %a.btn.btn-danger{ role: 'form', method: 'post',href: "{% url 'storages_delete' storage.id %}" }
+                      - csrf_token
+                      %input{ type: 'hidden', name: 'storage_id', value: "{{ storage.id }}" }
                       .fa.fa-times

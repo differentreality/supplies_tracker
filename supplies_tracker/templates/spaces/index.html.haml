@@ -33,10 +33,16 @@
                   .btn-group
                     %a.btn.btn-success{ href: "{% url 'spaces_show' space.id %}" }
                       .fa.fa-eye
-                    %a.btn.btn-primary{ href: "{% url 'login' %}" }
+                    %a.btn.btn-primary{ href: "{% url 'spaces_update' space.id %}" }
                       .fa.fa-edit
+
                     %a.btn.btn-danger{}
                       .fa.fa-times
+                    %form{ role: 'form', method: 'post', action: "{% url 'space_delete' space.id %}" }
+                      - csrf_token
+                      %input{ type: 'hidden', name: 'space_id', value: "{{ space.id }}" }
+                      %button.btn.btn-danger{ type: 'submit'}
+                        .fa.fa-times
                     %a.btn.btn-primary{ href: "{% url 'storages_new' %}?space_id={{ space.id }}" }
                       .fa.fa-plus
                         Storage
