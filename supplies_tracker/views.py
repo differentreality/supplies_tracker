@@ -8,6 +8,8 @@ from django.contrib.auth import logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseNotFound
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.views import generic
@@ -132,6 +134,23 @@ def storages_index(request):
   user_spaces = user_spaces.values_list('id', flat=True)
   storages = Storage.objects.filter(space_id__in=user_spaces)
   return render(request, 'storages/index.html.haml', { 'storages': storages, 'user_spaces': user_spaces })
+
+def storages_edit(request, storage_id):
+  storage = Storage.objects.get(id=storage_id)
+  space = Space.objects.get(id=storage.space_id)
+
+  if request.method == 'POST':
+    form = storage_form(request.POST, instance=storage)
+    # # storage_id = request.POST.get('storage_id', None)
+    # storage = get_object_or_404(Storage, pk=storage_id)
+    # storage.approved_by_bm = True
+    storage.save()
+    return redirect('storages_index')
+  else:
+      form = Storage(instance=storage)
+    #   form = storage_form()
+
+  return render(request, 'storages/edit.html.haml', { 'form': form, 'space': space })
 
 def storages_show(request, storage_id):
     try:

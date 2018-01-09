@@ -1,10 +1,14 @@
 - load bootstrap3
 - load staticfiles
 
--# Incllude fontawesome icons
-%link{ rel: 'stylesheet', href: "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", integrity: "sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin: 'anonymous' }
 -# Include css files
 %link{ rel: 'stylesheet', href: "{% static 'css/layout.css' %}" }
+-# Include fontawesome icons
+%link{ rel: 'stylesheet', href: "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", integrity: "sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin: 'anonymous' }
+-# Include css for datatables
+%link{ href: "{% static 'datatables/media/css/jquery.dataTables.css' %}", rel: "stylesheet" }
+%link{ href: "{% static 'datatables/extensions/Responsive/css/dataTables.responsive.css' %}", rel: "stylesheet" }
+%link{ href: "{% static 'datatables/extensions/TableTools/css/dataTables.tableTools.css' %}", rel: "stylesheet" }
 
 %html
   %head
@@ -22,3 +26,11 @@
 
     %footer#footer
       {% include 'footer.html.haml' %}
+
+
+- block extrajs
+  %script{ src: "{% static 'jquery/jquery.min.js' %}" }
+  %script{ src: "{% static 'datatables/media/js/jquery.dataTables.js' %}" }
+  %script{ src: "{% static 'datatables/extensions/Responsive/js/dataTables.responsive.js' %}" }
+  %script{ src: "{% static 'datatables/extensions/TableTools/js/dataTables.tableTools.js' %}" }
+  %script{ src: "{% static 'scripts/scripts.js' %}" }

@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^storages/(?P<storage_id>[0-9]+)/$', views.storages_show, name='storages_show'),
     url(r'^storages/(?P<pk>[0-9]+)/edit$', views.StorageUpdate.as_view(), name='storages_update'),
     url(r'^storages/(?P<pk>[0-9]+)/delete/$', views.StorageDelete.as_view(), name='storages_delete'),
-
+    
     url(r'spaces$', views.spaces_index, name='spaces_index'),
     url('spaces/new', views.spaces_new, name='spaces_new'),
     url(r'^spaces/([0-9])/$', views.spaces_show, name='spaces_show'),

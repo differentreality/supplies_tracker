@@ -13,8 +13,10 @@
           If you need additional items, please add them
     .row
       .col-md-12
-        %table.table.table-striped.table-hover#items-table
+        %br
+        %table.table.display.responsive.datatable#items
           %thead
+
             %th No
             %th Name
             %th Description
@@ -25,5 +27,5 @@
               %tr
                 %td= forloop.counter
                 %td= item.name
-                %td=item.description
-                %td=item.price_bought
+                %td= item.description
+                %td= item.price_bought
