@@ -6,16 +6,14 @@
       .col-md-12
         .page-header
           %h1
-            Add new storage
-            -# - if space
-            -#   for
-            -#   = space.name
+            Edit Storage
     .row
-      .col-md-6
+      .col-md-12
         %form{ role: 'form', method: 'post' }
           - csrf_token
           = form|bootstrap
-          -# %input{ type: 'hidden', name: 'space_id', value: "{{ space.id }}" }
+           %input{ type: 'hidden', name: 'space_id', value: 1 }
 
+          -# %a.btn.btn-primary{ href: "{% url 'sto rages_edit' storage.id %}" }
           %button.btn.btn-success{ type: 'submit' }
             Save
