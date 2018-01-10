@@ -25,19 +25,18 @@ urlpatterns = [
     url(r'^$', views.home, name='home.html.haml'), # change the index page
     url(r'items$', views.items_index, name='items_index'),
     url('items/new', views.items_new, name='items_new'),
-    url(r'^spaces$', views.spaces_index, name='spaces_index'),
-    url(r'^spaces/([0-9])/$', views.spaces_show, name='spaces_show'),
-    url(r'^spaces/new$', views.spaces_new, name='spaces_new'),
-    url(r'^spaces/(?P<pk>[0-9]+)/update$', views.SpaceUpdate.as_view(), name='spaces_update'),
-    url(r'^spaces/(?P<pk>[0-9]+)/delete/$', views.SpaceDelete.as_view(), name='space_delete'),
 
     url(r'storages$', views.storages_index, name='storages_index'),
     url(r'^storages/new/$', views.storages_new, name='storages_new'),
-    url(r'^storages/([0-9])/$', views.storages_show, name='storages_show'),
+    url(r'^storages/(?P<storage_id>[0-9]+)/$', views.storages_show, name='storages_show'),
+    url(r'^storages/(?P<pk>[0-9]+)/edit$', views.StorageUpdate.as_view(), name='storages_update'),
+    url(r'^storages/(?P<pk>[0-9]+)/delete/$', views.StorageDelete.as_view(), name='storages_delete'),
 
     url(r'spaces$', views.spaces_index, name='spaces_index'),
     url('spaces/new', views.spaces_new, name='spaces_new'),
     url(r'^spaces/([0-9])/$', views.spaces_show, name='spaces_show'),
+    url(r'^spaces/(?P<pk>[0-9]+)/edit$', views.SpaceUpdate.as_view(), name='spaces_update'),
+    url(r'^spaces/(?P<pk>[0-9]+)/delete/$', views.SpaceDelete.as_view(), name='spaces_delete'),
 
     url(r'^login/$', supplies_tracker_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, { 'next_page': 'login' }, name='logout'),

@@ -31,7 +31,7 @@ class Storage(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    space = models.ForeignKey(Space, on_delete=models.CASCADE,null=True)
+    space = models.ForeignKey(Space, on_delete=models.CASCADE,null=False)
     items = models.ManyToManyField('Item', through='Items_Storage', related_name='Item')
 
 class Items_Storage(models.Model) :
