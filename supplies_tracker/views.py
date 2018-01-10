@@ -124,7 +124,7 @@ def items_new(request):
     else:
         form = item_form()
 
-    return render(request, 'item/new.html.haml', { 'form': form })
+    return render(request, 'items/new.html.haml', { 'form': form })
 
 @login_required
 def storages_index(request):
