@@ -97,6 +97,17 @@ class StorageDelete(DeleteView):
     model = Storage
     success_url = reverse_lazy('storages_index')
 
+
+class ItemUpdate(UpdateView):
+    model = Item
+    fields = ['name', 'reimbursement', 'price_bought', 'description']
+    template_name = 'items/edit.html.haml'
+    success_url = reverse_lazy('items_index')
+
+class ItemDelete(DeleteView):
+    model = Item
+    success_url = reverse_lazy('items_index')
+
 # @login_required
 # def spaces_new(request):
 #     if request.method == 'POST':

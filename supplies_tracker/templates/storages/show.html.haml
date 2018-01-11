@@ -21,7 +21,7 @@
         %thead
           %th No
           %th Name
-          %th Quantity
+          %th Description
           %th Price (bought)
           %th Price (reiumbrusemnt)
           %th Actions
@@ -36,3 +36,11 @@
               %td= item.price_bought
               %td= item.reimbursement
               %td
+                .btn-group
+                  %a.btn.btn-primary{ href: "{% url 'items_update' item.id %}" }
+                    .fa.fa-edit
+                %form{ role: 'form', method: 'post', action: "{% url 'items_delete' item.id %}" }
+                  - csrf_token
+
+                  %button.btn.btn-danger{ type: 'submit'}
+                    .fa.fa-times

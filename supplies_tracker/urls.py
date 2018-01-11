@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^$', views.home, name='home.html.haml'), # change the index page
     url(r'items$', views.items_index, name='items_index'),
     url('items/new', views.items_new, name='items_new'),
+    url(r'^items/(?P<pk>[0-9]+)/edit$', views.ItemUpdate.as_view(), name='items_update'),
+    url(r'^items/(?P<pk>[0-9]+)/delete/$', views.ItemDelete.as_view(), name='items_delete'),
 
     url(r'storages$', views.storages_index, name='storages_index'),
     url(r'^storages/new/$', views.storages_new, name='storages_new'),
