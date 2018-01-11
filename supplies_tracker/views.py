@@ -118,7 +118,12 @@ def items_new(request):
         if form.is_valid():
             obj = Item(**form.cleaned_data)
             obj.user = request.user
+            storage = request.GET['storage_id']
             obj.save()
+            new_item = Items_Storage(storage=Storage.objects.get(id=storage), items=Item.objects.get(id=obj.id) )
+            new_item.save()
+
+
 
             return HttpResponseRedirect('/items')
     else:
@@ -136,7 +141,8 @@ def storages_index(request):
 def storages_show(request, storage_id):
     try:
         storage = Storage.objects.get(id=storage_id)
-        items = storage.items.all()
+        items = storage.item.all()
+
     except Storage.DoesNotExist:
         storage = None
         items = None

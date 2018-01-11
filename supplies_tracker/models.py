@@ -32,15 +32,15 @@ class Storage(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     space = models.ForeignKey(Space, on_delete=models.CASCADE, null=False)
-    items = models.ManyToManyField('Item', through='Items_Storage', related_name='Item')
+    item = models.ManyToManyField(Item, through='Items_Storage', related_name='Item')
 
 class Items_Storage(models.Model) :
-    item = models.ForeignKey(Item)
+    items = models.ForeignKey(Item)
     storage = models.ForeignKey(Storage)
     date_added = models.DateTimeField(auto_now_add=True)
-    quantity = models.IntegerField(null=False,blank=False)
+    quantity = models.IntegerField(null=True,blank=False)
     price_bought = models.FloatField
     price_donated = models.FloatField
 
     class Meta:
-        unique_together = (('storage', 'item'),)
+        unique_together = (('storage', 'items'),)
