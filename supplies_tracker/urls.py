@@ -36,7 +36,7 @@ urlpatterns = [
 
     url(r'spaces$', views.spaces_index, name='spaces_index'),
     url('spaces/new', views.spaces_new, name='spaces_new'),
-    url(r'^spaces/(?P<pk>[0-9]+)/$', views.spaces_show, name='spaces_show'),
+    url(r'^spaces/(?P<space_id>[0-9]+)/$', views.spaces_show, name='spaces_show'),
     url(r'^spaces/(?P<pk>[0-9]+)/edit$', views.SpaceUpdate.as_view(), name='spaces_update'),
     url(r'^spaces/(?P<pk>[0-9]+)/delete/$', views.SpaceDelete.as_view(), name='spaces_delete'),
 
