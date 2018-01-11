@@ -19,11 +19,21 @@
             %th Name
             %th Description
             %th Latest purschase (euro)
+            %th Actions
 
           %tbody
             - for item in items
               %tr
                 %td= forloop.counter
-                %td= item.name
+                %td=item.name
                 %td=item.description
                 %td=item.price_bought
+                %td
+                  .btn-group
+                    %a.btn.btn-primary{ href: "{% url 'items_update' item.id %}" }
+                      .fa.fa-edit
+                  %form{ role: 'form', method: 'post', action: "{% url 'items_delete' item.id %}" }
+                    - csrf_token
+                    %input{ type: 'hidden', name: 'item_id', value: "{{ item.id }}" }
+                    %button.btn.btn-danger{ type: 'submit'}
+                      .fa.fa-times

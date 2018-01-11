@@ -12,7 +12,9 @@ from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.views import generic
 from django.core.urlresolvers import reverse_lazy
-from django.views import generic
+from django.contrib.auth.models import User
+from django.urls import reverse
+
 
 @login_required
 def items_index(request):
@@ -124,6 +126,7 @@ class ItemDelete(DeleteView):
 #     return render(request, 'spaces/new.html.haml', { 'form': form })
 @login_required
 def items_new(request):
+    storage_id = request.GET['storage_id']
     if request.method == 'POST':
         form = item_form(request.POST)
         if form.is_valid():
@@ -131,12 +134,10 @@ def items_new(request):
             obj.user = request.user
             storage = request.GET['storage_id']
             obj.save()
-            new_item = Items_Storage(storage=Storage.objects.get(id=storage), items=Item.objects.get(id=obj.id) )
+            new_item = Items_Storage(storage=Storage.objects.get(id=storage), items=Item.objects.get(id=obj.id))
             new_item.save()
 
-
-
-            return HttpResponseRedirect('/items')
+            return HttpResponseRedirect(reverse('storages_show', kwargs= {'storage_id': storage_id}))
     else:
         form = item_form()
 
@@ -150,6 +151,7 @@ def storages_index(request):
   return render(request, 'storages/index.html.haml', { 'storages': storages, 'user_spaces': user_spaces })
 
 def storages_show(request, storage_id):
+
     try:
         storage = Storage.objects.get(id=storage_id)
         items = storage.item.all()
@@ -165,11 +167,11 @@ def storages_show(request, storage_id):
     if storage is None:
         return render(request, 'error.html.haml' )
     else:
-        return render(request, 'storages/show.html.haml', { 'storage': storage, 'items': items } )
+        return render(request, 'storages/show.html.haml', { 'storage': storage, 'items': items })
 
 @login_required
 def storages_new(request):
-    # space_id = request.GET['space_id']
+    space_id = request.GET['space_id']
     # space = Space.objects.get(id=space_id)
 
     if request.method == 'POST':
@@ -180,7 +182,7 @@ def storages_new(request):
             obj.space_id = request.GET['space_id']
             obj.save()
 
-            return HttpResponseRedirect('/storages')
+            return HttpResponseRedirect(reverse('spaces_show', args= space_id))
     else:
         form = storage_form()
 
@@ -192,11 +194,31 @@ def spaces_index(request):
   enum_spaces = enumerate(spaces)
   return render(request, 'spaces/index.html.haml', { 'enum_spaces': enum_spaces })
 
-@login_required
-def spaces_show(request, space_id):
-  space = Space.objects.get(id=space_id)
-  storages = Storage.objects.filter(space_id=space_id)
-  return render(request, 'spaces/show.html.haml', { 'space': space, 'storages': storages } )
+#@login_required
+#def spaces_show(request, space_id):
+ # space = Space.objects.get(id=space_id)
+ # storages = Storage.objects.filter(space_id=space_id)
+ # return render(request, 'spaces/show.html.haml', { 'space': space, 'storages': storages } )
+
+def spaces_show(request,space_id):
+    try:
+        space = space_id
+        storages = Storage.objects.filter(space_id=space_id)
+
+
+
+    except Space.DoesNotExist:
+        space = None
+        storages = None
+
+    # items = Storage.objects.values_list('items')
+    # items = Storage.objects.filter(items)
+
+    # items = Item.objects.filter(storages=storage)
+    if space is None:
+        return render(request, 'error.html.haml')
+    else:
+        return render(request, 'spaces/show.html.haml', {'space_id': space_id, 'storages': storages})
 
 @login_required
 def spaces_new(request):
