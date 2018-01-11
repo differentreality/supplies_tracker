@@ -31,7 +31,7 @@ class Storage(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    space = models.ForeignKey(Space, on_delete=models.CASCADE,null=False)
+    space = models.ForeignKey(Space, on_delete=models.CASCADE, null=False)
     items = models.ManyToManyField('Item', through='Items_Storage', related_name='Item')
 
 class Items_Storage(models.Model) :
@@ -41,3 +41,6 @@ class Items_Storage(models.Model) :
     quantity = models.IntegerField(null=False,blank=False)
     price_bought = models.FloatField
     price_donated = models.FloatField
+
+    class Meta:
+        unique_together = (('storage', 'item'),)

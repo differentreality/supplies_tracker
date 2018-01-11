@@ -10,7 +10,6 @@ class item_form(forms.Form):
 
 class storage_form(forms.Form):
     name = forms.CharField(label='Name', max_length=100)
-    space_id = forms.IntegerField(widget = forms.HiddenInput())
 
 
 class space_form(forms.Form):

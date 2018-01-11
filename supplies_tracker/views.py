@@ -159,7 +159,8 @@ def storages_new(request):
         form = storage_form(request.POST)
         if form.is_valid():
             obj = Storage(**form.cleaned_data)
-            obj.space_id = 1
+            obj.user = request.user
+            obj.space_id = request.GET['space_id']
             obj.save()
 
             return HttpResponseRedirect('/storages')

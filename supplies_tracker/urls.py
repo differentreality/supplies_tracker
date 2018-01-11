@@ -38,6 +38,8 @@ urlpatterns = [
     url(r'^spaces/(?P<pk>[0-9]+)/edit$', views.SpaceUpdate.as_view(), name='spaces_update'),
     url(r'^spaces/(?P<pk>[0-9]+)/delete/$', views.SpaceDelete.as_view(), name='spaces_delete'),
 
+
+
     url(r'^login/$', supplies_tracker_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, { 'next_page': 'login' }, name='logout'),
     url(r'^signup/$', supplies_tracker_views.signup, name='signup'),
