@@ -15,7 +15,6 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-
 @login_required
 def items_index(request):
   items = Item.objects.all()
@@ -70,6 +69,7 @@ class SpaceUpdate(UpdateView):
     template_name = 'spaces/edit.html.haml'
     success_url = reverse_lazy('spaces_index')
 
+
 class SpaceCreate(CreateView):
     model = Space
     fields = ['name','address','description']
@@ -94,6 +94,7 @@ class StorageUpdate(UpdateView):
     model = Storage
     fields = ['name']
     success_url = reverse_lazy('storages_index')
+
 
 class StorageDelete(DeleteView):
     model = Storage
