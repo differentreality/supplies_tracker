@@ -9,7 +9,7 @@
             Edit Item
     .row
       .col-md-12
-        %form{ role: 'form', method: 'post' }
+        %form{ role: 'form',:enctype => "multipart/form-data", method: 'post' }
           - csrf_token
           = form|bootstrap
 

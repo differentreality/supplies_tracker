@@ -1,5 +1,5 @@
 - extends 'application.html.haml'
-
+{% load thumbnail %}
 - block content
   .row
     .col-md-12
@@ -16,6 +16,7 @@
         %table.table.table-striped.table-hover#spaces-table
           %thead
             %th No
+            %th Photo
             %th Name
             %th Description
             %th Address
@@ -26,7 +27,15 @@
               %tr
                 %td
                   =  forloop.counter
-                %td= space.name
+                %td=
+                  %td=
+                    %p
+                      {% if space.image %}
+                        {% thumbnail space.image "120x120" crop="center" as im %}
+                          %img{:height => "{{ im.height }}", :src => "{{ im.url }}", :width => "{{ im.width }}"}/
+                            {% endthumbnail %}
+                              {% endif %}
+                %td=space.name
                 %td=space.description
                 %td=space.address
                 %td

@@ -1,5 +1,5 @@
 - extends 'application.html.haml'
-
+{% load thumbnail %}
 - block content
 
   .row
@@ -20,6 +20,7 @@
       %table.table.table-striped.table-hover#spaces-table
         %thead
           %th No
+          %th Item Photo
           %th Name
           %th Description
           %th Price (bought)
@@ -29,8 +30,14 @@
         %tbody
           - for item in items
             %tr
-              %td
-                =  forloop.counter
+              %td=forloop.counter
+                %td=
+                  %p
+                    {% if item.image %}
+                      {% thumbnail item.image "120x120" crop="center" as im %}
+                        %img{:height => "{{ im.height }}", :src => "{{ im.url }}", :width => "{{ im.width }}"}/
+                          {% endthumbnail %}
+                            {% endif %}
               %td= item.name
               %td= item.description
               %td= item.price_bought

@@ -1,5 +1,5 @@
 - extends 'application.html.haml'
-
+{% load thumbnail %}
 - block content
   .row
     .col-md-12
@@ -16,6 +16,7 @@
         %table.table.table-striped.table-hover#storages-table
           %thead
             %th No
+            %th Storage Photo
             %th Name
             %th In
             %th Actions
@@ -25,6 +26,13 @@
             - for storage in storages
               %tr
                 %td= forloop.counter
+                  %td=
+                    %p
+                      {% if storage.image %}
+                        {% thumbnail storage.image "120x120" crop="center" as im %}
+                          %img{:height => "{{ im.height }}", :src => "{{ im.url }}", :width => "{{ im.width }}"}/
+                            {% endthumbnail %}
+                              {% endif %}
                 %td= storage.name
                 %td
                   = storage.space.name

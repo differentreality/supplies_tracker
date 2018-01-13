@@ -3,6 +3,7 @@ from hamlpy.views.generic import HamlExtensionTemplateView
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from sorl.thumbnail import ImageField
 
 class User(User):
     class Meta:
@@ -16,6 +17,7 @@ class Item(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     storages = models.ManyToManyField('Storage', through='Items_Storage', related_name='Storage')
+    image = ImageField(upload_to='whatever',null= True)
 
 class Space(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
@@ -26,6 +28,7 @@ class Space(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    image = ImageField(upload_to='whatever',null=True)
 
 class Storage(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
@@ -33,6 +36,8 @@ class Storage(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     space = models.ForeignKey(Space, on_delete=models.CASCADE, null=False)
     item = models.ManyToManyField(Item, through='Items_Storage', related_name='Item')
+    image = ImageField(upload_to='whatever',null= True)
+
 
 class Items_Storage(models.Model) :
     items = models.ForeignKey(Item)

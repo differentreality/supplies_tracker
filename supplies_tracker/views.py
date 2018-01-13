@@ -65,7 +65,7 @@ def items_index(request):
 
 class SpaceUpdate(UpdateView):
     model = Space
-    fields = ['name', 'address', 'description']
+    fields = ['name', 'address', 'description','image']
     template_name = 'spaces/edit.html.haml'
     success_url = reverse_lazy('spaces_index')
 
@@ -92,7 +92,7 @@ class SpaceDelete(DeleteView):
 class StorageUpdate(UpdateView):
     template_name = 'storages/edit.html.haml'
     model = Storage
-    fields = ['name']
+    fields = ['name','image']
     success_url = reverse_lazy('storages_index')
 
 
@@ -103,7 +103,7 @@ class StorageDelete(DeleteView):
 
 class ItemUpdate(UpdateView):
     model = Item
-    fields = ['name', 'reimbursement', 'price_bought', 'description']
+    fields = ['name', 'reimbursement', 'price_bought', 'description','image']
     template_name = 'items/edit.html.haml'
     success_url = reverse_lazy('items_index')
 
@@ -129,7 +129,7 @@ class ItemDelete(DeleteView):
 def items_new(request):
     storage_id = request.GET['storage_id']
     if request.method == 'POST':
-        form = item_form(request.POST)
+        form = item_form(request.POST,request.FILES)
         if form.is_valid():
             obj = Item(**form.cleaned_data)
             obj.user = request.user
@@ -176,7 +176,7 @@ def storages_new(request):
     # space = Space.objects.get(id=space_id)
 
     if request.method == 'POST':
-        form = storage_form(request.POST)
+        form = storage_form(request.POST,request.FILES)
         if form.is_valid():
             obj = Storage(**form.cleaned_data)
             obj.user = request.user
@@ -224,7 +224,7 @@ def spaces_show(request,space_id):
 @login_required
 def spaces_new(request):
     if request.method == 'POST':
-        form = space_form(request.POST)
+        form = space_form(request.POST,request.FILES)
         if form.is_valid():
             obj = Space(**form.cleaned_data)
             obj.user = request.user
@@ -279,3 +279,5 @@ def login(request):
         form = LoginForm()
 
     return render(request, 'login.html.haml', { 'form': form })
+
+

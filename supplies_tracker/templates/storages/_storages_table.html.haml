@@ -1,6 +1,10 @@
+
+{% load thumbnail %}
+
 %table.table.table-striped.table-hover#spaces-table
   %thead
     %th No
+    %th Storage Photo
     %th Name
     %th Created at
     %th Address of Space
@@ -9,8 +13,14 @@
   %tbody
     - for storage in storages
       %tr
-        %td
-          =  forloop.counter
+        %td=  forloop.counter
+        %td=
+          %p
+            {% if storage.image %}
+              {% thumbnail storage.image "120x120" crop="center" as im %}
+                %img{:height => "{{ im.height }}", :src => "{{ im.url }}", :width => "{{ im.width }}"}/
+                  {% endthumbnail %}
+                    {% endif %}
         %td= storage.name
         %td= storage.created_at
         %td= storage.space.address
