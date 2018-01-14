@@ -13,3 +13,15 @@ footer {
 .navbar li a {
   font-size: 18px;
 }
+
+.paging_bootstrap {
+  float: right !important;
+}
+
+.pagination {
+  margin: 0;
+}
+
+#spaces-table_filter {
+  float: right;
+}
