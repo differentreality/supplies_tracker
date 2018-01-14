@@ -1,3 +1,6 @@
 *.pyc
 db.sqlite3
 .idea
+media/cache/*
+media/whatever/*
+media/*
