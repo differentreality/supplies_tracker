@@ -47,8 +47,8 @@
                       .fa.fa-plus
                         Storage
 
-                  %form{ role: 'form', method: 'post', action: "{% url 'spaces_delete' space.id %}" }
-                    - csrf_token
-                    %input{ type: 'hidden', name: 'space_id', value: "{{ space.id }}" }
-                    %button.btn.btn-danger{ type: 'submit'}
-                      .fa.fa-times
+                    %form{ role: 'form', method: 'post', action: "{% url 'spaces_delete' space.id %}" }
+                      - csrf_token
+                      %input{ type: 'hidden', name: 'space_id', value: "{{ space.id }}" }
+                      %button.btn.btn-danger{ type: 'submit'}
+                        .fa.fa-times

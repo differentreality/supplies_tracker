@@ -1,15 +1,11 @@
-- load bootstrap3
 - load staticfiles
-
--# Incllude fontawesome icons
-%link{ rel: 'stylesheet', href: "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", integrity: "sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin: 'anonymous' }
--# Include css files
-%link{ rel: 'stylesheet', href: "{% static 'css/layout.css' %}" }
 
 %html
   %head
-    - bootstrap_css
-    - bootstrap_messages
+    %link{ rel: "stylesheet", href: "{% static 'bootstrap/css/bootstrap.min.css' %}" }
+    %link{ rel: "stylesheet", href: "{% static 'fontawesome/css/font-awesome.min.css' %}" }
+    %link{ rel: "stylesheet", href: "{% static 'table/css/datatable.bootstrap.css' %}" }
+    %link{ rel: 'stylesheet', href: "{% static 'css/layout.css' %}" }
 
     %title Supplies Tracker
   %body
@@ -22,3 +18,11 @@
 
     %footer#footer
       {% include 'footer.html.haml' %}
+    %script{ src: "{% static 'bootstrap/js/jquery.min.js' %}" }
+    %script{ src: "{% static 'bootstrap/js/bootstrap.min.js' %}" }
+
+    %script{ src: "{% static 'table/js/jquery.browser.min.js' %}" }
+    %script{ src: "{% static 'table/js/jquery.dataTables.min.js' %}" }
+    %script{ src: "{% static 'table/js/bootstrap.dataTables.js' %}" }
+    %script{ src: "{% static 'js/custom.js' %}" }
+    - block javascript
