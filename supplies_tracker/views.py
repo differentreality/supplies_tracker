@@ -20,49 +20,6 @@ def items_index(request):
   items = Item.objects.all()
   return render(request, 'items/index.html.haml', { 'items': items })
 
-# class ItemView(generic.ListView):
-#     template_name = 'items/index.html.haml'
-#     context_object_name = 'all_items'
-#
-#     def get_queryset(self):
-#         return Item.objects.all()
-
-    # if 'storage_id' in request.GET:
-    #     storage_id = request.GET['storage_id']
-    #     storage = Storage.objects.get(id=storage_id)
-    # else:
-    #     storage = None
-    #
-    # if request.method == 'POST':
-    #     form = item_form(request.POST)
-    #     if form.is_valid():
-    #         obj = Item(**form.cleaned_data)
-    #         obj.save()
-    #         if storage is not None:
-    #             content = Items_Storage.objects.create(item=obj, storage=storage, quantity=0)
-    #             content.save()
-    #
-    #         return HttpResponseRedirect('/items')
-    # else:
-    #     form = item_form()
-    #
-    # return render(request, 'items/new.html.haml', { 'form': form })
-
-# class ItemCreate(CreateView):
-#     model = Item
-#     fields = ['name','price_bought','description','reimbursement']
-#
-# class ItemUpdate(UpdateView):
-#     model = Item
-#     fields = ['name', 'price_bought', 'description', 'reimbursement']
-
-# class SpaceView(ListView):
-#     template_name = 'spaces/index.html.haml'
-#     context_object_name = 'all_spaces'
-#
-#     def get_queryset(self):
-#         return Space.objects.all()
-
 class SpaceUpdate(UpdateView):
     model = Space
     fields = ['name', 'address', 'description','image']
@@ -77,17 +34,6 @@ class SpaceCreate(CreateView):
 class SpaceDelete(DeleteView):
     model = Space
     success_url = reverse_lazy('spaces_index')
-
-# class StorageView(generic.ListView):
-#     template_name = 'storages/index.html.haml'
-#     context_object_name = 'all_storages'
-#
-#     def get_queryset(self):
-#         return Storage.objects.all()
-#
-# class StorageCreate(CreateView):
-#     model = Storage
-#     fields = ['name']
 
 class StorageUpdate(UpdateView):
     template_name = 'storages/edit.html.haml'
@@ -111,20 +57,6 @@ class ItemDelete(DeleteView):
     model = Item
     success_url = reverse_lazy('items_index')
 
-# @login_required
-# def spaces_new(request):
-#     if request.method == 'POST':
-#         form = space_form(request.POST)
-#         if form.is_valid():
-#             obj = Space(**form.cleaned_data)
-#             obj.user = request.user
-#             obj.save()
-#
-#             return HttpResponseRedirect('/spaces')
-#     else:
-#         form = space_form()
-#
-#     return render(request, 'spaces/new.html.haml', { 'form': form })
 @login_required
 def items_new(request):
     storage_id = request.GET['storage_id']
@@ -279,5 +211,3 @@ def login(request):
         form = LoginForm()
 
     return render(request, 'login.html.haml', { 'form': form })
-
-
