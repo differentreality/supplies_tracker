@@ -6,8 +6,9 @@
     %th No
     %th Storage Photo
     %th Name
-    %th Created at
     %th Address of Space
+    %th Updated At
+    %th Created at
     %th Actions
 
   %tbody
@@ -22,8 +23,9 @@
                   {% endthumbnail %}
                     {% endif %}
         %td= storage.name
-        %td= storage.created_at
         %td= storage.space.address
+        %td= storage.updated_at
+        %td= storage.created_at
         %td
           .btn-group
             %a.btn.btn-success{ href: "{% url 'storages_show' storage.id %}" }

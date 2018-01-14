@@ -6,8 +6,7 @@
       .page-header
         %h1
           Storages({{storages.count}})
-          %a.pull-right.btn.btn-primary{ href: "{% url 'storages_new' %}" }
-            Add
+
         .text-muted
           You can use any of those already created storages.
           If you need additional storages, please add them
@@ -18,7 +17,7 @@
             %th No
             %th Storage Photo
             %th Name
-            %th In
+            %th In Space
             %th Actions
 
 
@@ -38,6 +37,12 @@
                   = storage.space.name
                   .text-muted
                     = storage.space.description
+                    - if storage.space.address != ' '
+                      %br
+                      %i.fa.fa-map-marker
+                      = storage.space.address
+                  %a.btn.btn-primary{ href: "{% url 'storages_new' storage.space.id%}" }
+                    Add Storage
                 %td
                   .btn-group
                     %a.btn.btn-success{ href: "{% url 'storages_show' storage.id %}" }
