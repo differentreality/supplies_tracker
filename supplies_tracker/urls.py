@@ -25,7 +25,8 @@ from django.conf import  settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.home, name='home.html.haml'), # change the index page
+    url(r'^$', views.home, name='home.html.haml'),
+
     url(r'items$', views.items_index, name='items_index'),
     url('items/new', views.items_new, name='items_new'),
     url(r'^items/(?P<pk>[0-9]+)/edit$', views.ItemUpdate.as_view(), name='items_update'),
@@ -43,8 +44,6 @@ urlpatterns = [
     url(r'^spaces/(?P<space_id>[0-9]+)/$', views.spaces_show, name='spaces_show'),
     url(r'^spaces/(?P<pk>[0-9]+)/edit$', views.SpaceUpdate.as_view(), name='spaces_update'),
     url(r'^spaces/(?P<pk>[0-9]+)/delete/$', views.SpaceDelete.as_view(), name='spaces_delete'),
-
-
 
     url(r'^login/$', supplies_tracker_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, { 'next_page': 'login' }, name='logout'),

@@ -5,11 +5,13 @@
     .col-md-12
       .page-header
         %h1
-          This is a list of all spaces
+          Your Spaces
+          - if spaces.count > 0
+            ({{spaces.count}})
           %a.pull-right.btn.btn-primary{ href: "{% url 'spaces_new' %}" }
             Add
         .text-muted
-          View your created spaces .
+          View your created spaces.
           You can always create a new space for your needs
     .row
       .col-md-12

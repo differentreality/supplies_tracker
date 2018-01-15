@@ -26,5 +26,5 @@
               .fa.fa-edit
             %form{ role: 'form', method: 'post', action: "{% url 'storages_delete' storage.id %}" }
               - csrf_token
-              %button.btn.btn-danger{ type: 'submit'}
+              %button.btn.btn-danger{ type: 'submit' }
                 .fa.fa-times
