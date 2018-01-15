@@ -14,7 +14,7 @@
         %h3
           Available storages
           ({{ storages.count }})
-          %a.pull-right.btn.btn-primary{ href: "{% url 'storages_new' %}?space_id={{ space_id }}" }
+          %a.pull-right.btn.btn-primary{ href: "{% url 'storages_new' space.id%}" }
             .fa.fa-plus
             Add Storage
       - if storages

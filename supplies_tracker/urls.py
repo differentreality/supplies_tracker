@@ -33,6 +33,7 @@ urlpatterns = [
 
     url(r'storages$', views.storages_index, name='storages_index'),
     url(r'^storages/new/$', views.storages_new, name='storages_new'),
+    url(r'^spaces/(?P<space_id>[0-9]+)/storages/new/$', views.storages_new, name='storages_new'),
     url(r'^storages/(?P<storage_id>[0-9]+)/$', views.storages_show, name='storages_show'),
     url(r'^storages/(?P<pk>[0-9]+)/edit$', views.StorageUpdate.as_view(), name='storages_update'),
     url(r'^storages/(?P<pk>[0-9]+)/delete/$', views.StorageDelete.as_view(), name='storages_delete'),
