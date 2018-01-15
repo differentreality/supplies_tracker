@@ -7,9 +7,9 @@
         .page-header
           %h1
             Add new storage
-            -# - if space
-            -#   for
-            -#   = space.name
+            - if space
+              for
+              = space.name
     .row
       .col-md-6
         %form{ role: 'form', :enctype => "multipart/form-data", method: 'post' }

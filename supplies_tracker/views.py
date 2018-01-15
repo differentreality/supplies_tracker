@@ -26,11 +26,6 @@ class SpaceUpdate(UpdateView):
     template_name = 'spaces/edit.html.haml'
     success_url = reverse_lazy('spaces_index')
 
-
-class SpaceCreate(CreateView):
-    model = Space
-    fields = ['name','address','description']
-
 class SpaceDelete(DeleteView):
     model = Space
     success_url = reverse_lazy('spaces_index')
@@ -41,11 +36,9 @@ class StorageUpdate(UpdateView):
     fields = ['name','image']
     success_url = reverse_lazy('storages_index')
 
-
 class StorageDelete(DeleteView):
     model = Storage
     success_url = reverse_lazy('storages_index')
-
 
 class ItemUpdate(UpdateView):
     model = Item
@@ -145,23 +138,14 @@ def spaces_index(request):
 
 def spaces_show(request,space_id):
     try:
-        space = space_id
+        space = Space.objects.get(id=space_id)
         storages = Storage.objects.filter(space_id=space_id)
-
-
 
     except Space.DoesNotExist:
         space = None
         storages = None
 
-    # items = Storage.objects.values_list('items')
-    # items = Storage.objects.filter(items)
-
-    # items = Item.objects.filter(storages=storage)
-    if space is None:
-        return render(request, 'error.html.haml')
-    else:
-        return render(request, 'spaces/show.html.haml', {'space_id': space_id, 'storages': storages})
+    return render(request, 'spaces/show.html.haml', {'space': space, 'storages': storages})
 
 @login_required
 def spaces_new(request):

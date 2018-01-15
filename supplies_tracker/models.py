@@ -38,7 +38,6 @@ class Storage(models.Model):
     item = models.ManyToManyField(Item, through='Items_Storage', related_name='Item')
     image = ImageField(upload_to='whatever',null= True)
 
-
 class Items_Storage(models.Model) :
     items = models.ForeignKey(Item)
     storage = models.ForeignKey(Storage)

@@ -5,7 +5,9 @@
     .col-md-12
       .page-header
         %h1
-          Storages({{storages.count}})
+          Your Storages
+          - if storages.count > 0
+            ({{storages.count}})
 
         .text-muted
           You can use any of those already created storages.
