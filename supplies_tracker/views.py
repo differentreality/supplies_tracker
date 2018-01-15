@@ -145,7 +145,10 @@ def spaces_show(request,space_id):
         space = None
         storages = None
 
-    return render(request, 'spaces/show.html.haml', {'space': space, 'storages': storages})
+    if space is None:
+      return render(request, 'error.html.haml')
+    else:
+      return render(request, 'spaces/show.html.haml', {'space': space, 'storages': storages})
 
 @login_required
 def spaces_new(request):
@@ -164,6 +167,18 @@ def spaces_new(request):
 
 def home(request):
     return render(request, 'home.html.haml')
+
+def users_show(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+        if user.is_active:
+            myclass = 'btn-primary'
+        else:
+            myclass = 'btn-danger'
+
+        return render(request, 'users/show.html.haml', { 'user': user, 'myclass': myclass } )
+    except User.DoesNotExist:
+        return render(request, 'error.html.haml')
 
 def signup(request):
     if request.method == 'POST':

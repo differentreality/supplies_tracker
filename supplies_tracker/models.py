@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from sorl.thumbnail import ImageField
 
 class User(User):
+    def name(self):
+        return self.first_name + self.last_name
     class Meta:
       proxy = True
 

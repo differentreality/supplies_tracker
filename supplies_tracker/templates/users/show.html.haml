@@ -1,4 +1,30 @@
 - extends 'application.html.haml'
 
 - block content
-  
+  .row
+    .col-md-12
+      .page-header
+        %h1
+          = user.get_full_name
+
+          %label.pull-right.btn{ class: myclass }
+            - if user.is_active
+              Active
+            - else
+              Not active
+
+  .row
+    .col-md-12
+      .well
+        %dl#user-info
+          %dt Email
+          %dd= user.email
+          %dt username
+          %dd= user.username
+          %dt First Name
+          %dd= user.first_name
+          %dt Last name
+          %dd= user.last_name
+
+          %dt Joined at
+          %dd= user.created_at

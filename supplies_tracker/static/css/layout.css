@@ -25,3 +25,7 @@ footer {
 #spaces-table_filter {
   float: right;
 }
+
+div.dataTables_length label{
+  float: left !important;
+}
