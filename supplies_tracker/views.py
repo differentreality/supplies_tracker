@@ -103,23 +103,33 @@ def storages_show(request, storage_id):
         return render(request, 'storages/show.html.haml', { 'storage': storage, 'items': items })
 
 @login_required
-def storages_new(request):
-    space_id = request.GET['space_id']
-    # space = Space.objects.get(id=space_id)
+def storages_new(request, space_id=None):
+    if space_id is None:
+        space = None
+    else:
+        space = Space.objects.get(id=space_id)
 
     if request.method == 'POST':
-        form = storage_form(request.POST,request.FILES)
+        form = storage_form(None, request.POST,request.FILES)
         if form.is_valid():
             obj = Storage(**form.cleaned_data)
-            obj.user = request.user
-            obj.space_id = request.GET['space_id']
+            if space_id is None:
+              space_id = form.data.get('space_id')
+              obj.space_id = space_id
+            else:
+              obj.space_id = space_id
+
             obj.save()
 
             return HttpResponseRedirect(reverse('spaces_show', args= space_id))
     else:
-        form = storage_form()
+        if space_id is None:
+          form = storage_form(user = request.user)
+        else:
+            form = storage_form(None,None)
 
-    return render(request, 'storages/new.html.haml', { 'form': form })
+
+    return render(request, 'storages/new.html.haml', { 'form': form , 'space': space})
 
 @login_required
 def spaces_index(request):
