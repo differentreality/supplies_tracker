@@ -43,7 +43,7 @@
                       .fa.fa-eye
                     %a.btn.btn-primary{ href: "{% url 'spaces_update' space.id %}" }
                       .fa.fa-edit
-                    %a.btn.btn-primary{ href: "{% url 'storages_new' %}?space_id={{ space.id }}" }
+                    %a.btn.btn-primary{ href: "{% url 'storages_new' space.id%}" }
                       .fa.fa-plus
                         Storage
 
