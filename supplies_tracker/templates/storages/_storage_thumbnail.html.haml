@@ -1,0 +1,6 @@
+- load thumbnail
+
+- if object.image
+  - thumbnail object.image "100x100" crop="center" as im
+    %img{ height: "{{ im.height }}", src: "{{ im.url }}", width: "{{ im.width }}" }
+  - endthumbnail

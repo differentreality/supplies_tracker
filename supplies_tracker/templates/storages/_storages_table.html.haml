@@ -1,6 +1,3 @@
-
-{% load thumbnail %}
-
 %table.table.table-striped.table-hover#spaces-table
   %thead
     %th No
@@ -15,13 +12,8 @@
     - for storage in storages
       %tr
         %td=  forloop.counter
-        %td=
-          %p
-            {% if storage.image %}
-              {% thumbnail storage.image "120x120" crop="center" as im %}
-                %img{:height => "{{ im.height }}", :src => "{{ im.url }}", :width => "{{ im.width }}"}/
-                  {% endthumbnail %}
-                    {% endif %}
+        %td
+          - include 'storages/_storage_thumbnail.html.haml' with object=storage
         %td= storage.name
         %td= storage.space.address
         %td= storage.updated_at

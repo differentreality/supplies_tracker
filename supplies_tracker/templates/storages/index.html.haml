@@ -1,5 +1,5 @@
 - extends 'application.html.haml'
-{% load thumbnail %}
+
 - block content
   .row
     .col-md-12
@@ -25,13 +25,8 @@
             - for storage in storages
               %tr
                 %td= forloop.counter
-                  %td=
-                    %p
-                      {% if storage.image %}
-                        {% thumbnail storage.image "120x120" crop="center" as im %}
-                          %img{:height => "{{ im.height }}", :src => "{{ im.url }}", :width => "{{ im.width }}"}/
-                            {% endthumbnail %}
-                              {% endif %}
+                %td
+                  - include 'storages/_storage_thumbnail.html.haml' with object=storage
                 %td= storage.name
                 %td
                   = storage.space.name
