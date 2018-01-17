@@ -41,7 +41,7 @@ class StorageDelete(DeleteView):
 
 class ItemUpdate(UpdateView):
     model = Item
-    fields = ['name', 'reimbursement', 'price_bought', 'description','image']
+    fields = ['name', 'description', 'price_bought', 'reimbursement','image']
     template_name = 'items/edit.html.haml'
     success_url = reverse_lazy('items_index')
 

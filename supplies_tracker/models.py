@@ -13,13 +13,13 @@ class User(User):
 
 class Item(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
-    description = models.TextField()
+    description = models.TextField(null=True,blank=True)
     price_bought = models.FloatField(default=0)
     reimbursement = models.FloatField(default=0, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     storages = models.ManyToManyField('Storage', through='Items_Storage', related_name='Storage')
-    image = ImageField(upload_to='whatever',null= True)
+    image = ImageField(upload_to='whatever',null= True,blank = True)
 
 class Space(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
@@ -30,7 +30,7 @@ class Space(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
-    image = ImageField(upload_to='whatever',null=True)
+    image = ImageField(upload_to='whatever',null=True, blank=True)
 
 class Storage(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
@@ -38,7 +38,7 @@ class Storage(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     space = models.ForeignKey(Space, on_delete=models.CASCADE, null=False)
     item = models.ManyToManyField(Item, through='Items_Storage', related_name='Item')
-    image = ImageField(upload_to='whatever',null= True)
+    image = ImageField(upload_to='whatever',null= True,blank=True)
 
 class Items_Storage(models.Model) :
     items = models.ForeignKey(Item)
