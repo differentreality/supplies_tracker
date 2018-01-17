@@ -32,6 +32,9 @@ urlpatterns = [
     url(r'^items/(?P<pk>[0-9]+)/edit$', views.ItemUpdate.as_view(), name='items_update'),
     url(r'^items/(?P<pk>[0-9]+)/delete/$', views.ItemDelete.as_view(), name='items_delete'),
 
+    url(r'^storages/(?P<storage_id>[0-9]+)/add_item/(?P<item_id>[0-9]+)/$', views.add_item, name='add_item'),
+    url(r'^storages/(?P<storage_id>[0-9]+)/remove_item/(?P<item_id>[0-9]+)/$', views.remove_item, name='remove_item'),
+
     url(r'storages$', views.storages_index, name='storages_index'),
     url(r'^storages/new/$', views.storages_new, name='storages_new'),
     url(r'^spaces/(?P<space_id>[0-9]+)/storages/new/$', views.storages_new, name='storages_new'),
