@@ -7,7 +7,7 @@ class item_form(forms.Form):
     name = forms.CharField(label='Name', max_length=100, widget=forms.TextInput(attrs={'autofocus': 'autofocus'}))
     description = forms.CharField(label='Description', max_length=100, required=False)
     price_bought = forms.FloatField(label='How much does this cost to buy?')
-    reimbursement = forms.FloatField(label='How much do you make? (Fill if you sell the items, or provide them against donation)')
+    reimbursement = forms.FloatField(label='How much do you make? (Fill if you sell the items, or provide them against donation)', required=False)
     image = forms.ImageField(label='Photo', required=False)
 
 class storage_form(forms.Form):
