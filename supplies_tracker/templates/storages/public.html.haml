@@ -1,0 +1,47 @@
+- extends 'application.html.haml'
+
+{% load thumbnail %}
+- block content
+
+  .row
+    .col-md-12
+      .page-header
+        %h2
+          = storage.name
+        .text-muted
+          = storage.description
+  .row.row-eq-height
+    .col-md-12
+      - for item in items
+        .col-md-4.col-sm-12.col-xs-12
+          .panel.panel-default
+            .panel-heading.text-center
+              = item.name
+              .text-muted
+                = item.items_storage_set.all.first.quantity
+                remaining
+            .panel-body
+              .col-md-6.col-sm-6.col-xs-6
+                %div{ style: 'height: 100px'}
+                  - if item.image
+                    .thumbnail{ style: 'margin: 0'}
+                      - include 'storages/_storage_thumbnail.html.haml' with object=item
+              .col-md-6.col-sm-6.col-xs-6.text-center
+                %div{ style: 'text-align: center;'}
+                .btn-group-vertical
+                  - if item.items_storage_set.all.first.quantity > 0
+                    %a.btn.btn-primary.btn-lg{ href: "{% url 'remove_item' storage.id item.id %}", method: 'post' }
+                      Took 1
+                    .text-muted{ style: 'word-wrap: break-word;' }
+                      Please donate
+                      %br
+                      = item.reimbursement
+                      euro
+                  - else
+                    %button.btn.btn-default.disabled
+                      Sorry, no more left!
+                    %s.text-muted{ style: 'word-wrap: break-word;' }
+                      Please donate
+                      %br
+                      = item.reimbursement
+                      euro

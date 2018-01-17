@@ -1,4 +1,3 @@
-# from hamlpy.views.generic import HamlExtensionTemplateView
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import Item, Storage, Space, Items_Storage
@@ -51,6 +50,28 @@ class ItemDelete(DeleteView):
     success_url = reverse_lazy('items_index')
 
 @login_required
+def add_item(request, storage_id, item_id):
+    storage = Storage.objects.get(id=storage_id)
+    storage_items = storage.item.all()
+    item = Item.objects.get(id=item_id)
+    items_storage = item.items_storage_set.get(storage_id=storage_id)
+
+    items_storage.quantity = int(items_storage.quantity or 0) + 1
+    items_storage.save()
+    return HttpResponseRedirect(reverse('storages_show', kwargs= {'storage_id': storage_id}))
+
+def remove_item(request, storage_id, item_id):
+    storage = Storage.objects.get(id=storage_id)
+    storage_items = storage.item.all()
+    item = Item.objects.get(id=item_id)
+    items_storage = item.items_storage_set.get(storage_id=storage_id)
+
+    if (items_storage.quantity > 0):
+      items_storage.quantity = items_storage.quantity - 1
+      items_storage.save()
+    return HttpResponseRedirect(reverse('storages_show', kwargs= {'storage_id': storage_id}))
+
+@login_required
 def items_new(request):
     storage_id = request.GET['storage_id']
     if request.method == 'POST':
@@ -77,7 +98,6 @@ def storages_index(request):
   return render(request, 'storages/index.html.haml', { 'storages': storages, 'user_spaces': user_spaces })
 
 def storages_show(request, storage_id):
-
     try:
         storage = Storage.objects.get(id=storage_id)
         items = storage.item.all()
@@ -86,14 +106,13 @@ def storages_show(request, storage_id):
         storage = None
         items = None
 
-    # items = Storage.objects.values_list('items')
-    # items = Storage.objects.filter(items)
-
-    # items = Item.objects.filter(storages=storage)
     if storage is None:
         return render(request, 'error.html.haml' )
     else:
+      if request.user.is_authenticated:
         return render(request, 'storages/show.html.haml', { 'storage': storage, 'items': items })
+      else:
+        return render(request, 'storages/public.html.haml', { 'storage': storage, 'items': items })
 
 @login_required
 def storages_new(request, space_id=None):

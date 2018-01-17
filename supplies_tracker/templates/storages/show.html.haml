@@ -1,4 +1,5 @@
 - extends 'application.html.haml'
+
 {% load thumbnail %}
 - block content
 
@@ -6,25 +7,29 @@
     .col-md-12
       .page-header
         %h2
+          Items in
           = storage.name
 
-          %a.pull-right.btn.btn-primary{ href: "{% url 'items_new' %}?storage_id={{ storage.id }}" }
-            .fa.fa-plus
-            Item
+          .btn-group.pull-right
+            %a.btn.btn-primary{ href: "{% url 'storages_update' storage.id%}" }
+              .fa.fa-edit
+              Edit
+            %a.btn.btn-warning{ href: "{% url 'items_new' %}?storage_id={{ storage.id }}" }
+              .fa.fa-plus
+              Item
         .text-muted
-          = storage.description
+          ({{ storage.space.name}})
   .row
     .col-md-12
-      %h3 Items in storage
-
       %table.table.table-striped.table-hover#spaces-table
         %thead
           %th No
-          %th Item Photo
+          %th Photo
           %th Name
+          %th Quantity Available
           %th Description
           %th Price (bought)
-          %th Price (reiumbrusemnt)
+          %th Price (reimbursement)
           %th Actions
 
         %tbody
@@ -39,6 +44,20 @@
                           {% endthumbnail %}
                             {% endif %}
               %td= item.name
+
+              %td{ style: "{% if item.items_storage_set.all.first.quantity < 5 %} background-color: #d9534f {% endif %}" }
+                .col-md-4
+                  = item.items_storage_set.all.first.quantity
+                .col-md-8
+                  .btn-group-vertical
+                    %a.btn.btn-success{ href: "{% url 'add_item' storage.id item.id %}", method: 'post' }
+                      .fa.fa-plus
+                      1
+                    %a.btn.btn-warning{ href: "{% url 'remove_item' storage.id item.id %}", method: 'post' }
+                      .fa.fa-minus
+                      1
+
+
               %td= item.description
               %td= item.price_bought
               %td= item.reimbursement
@@ -46,8 +65,8 @@
                 .btn-group
                   %a.btn.btn-primary{ href: "{% url 'items_update' item.id %}" }
                     .fa.fa-edit
-                %form{ role: 'form', method: 'post', action: "{% url 'items_delete' item.id %}" }
-                  - csrf_token
 
-                  %button.btn.btn-danger{ type: 'submit'}
-                    .fa.fa-times
+                  %form.btn-group{ role: 'form', method: 'post', action: "{% url 'items_delete' item.id %}" }
+                    - csrf_token
+                    %button.btn.btn-danger{ onclick: 'clicked(event)' }
+                      .fa.fa-times

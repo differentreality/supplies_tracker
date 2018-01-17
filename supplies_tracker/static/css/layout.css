@@ -29,3 +29,7 @@ footer {
 div.dataTables_length label{
   float: left !important;
 }
+
+form {
+  display: inline !important;
+}
