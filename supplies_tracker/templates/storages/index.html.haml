@@ -1,16 +1,32 @@
 - extends 'application.html.haml'
+- load bootstrap
 
 - block content
   .row
     .col-md-12
       .page-header
         %h1
-          Your Storages
-          - if storages.count > 0
-            ({{storages.count}})
-           %a.pull-right.btn.btn-primary{ href: "{% url 'storages_new' %}" }
-            Add
+          .col-md-8
+            Your Storages
+            - if storages.count > 0
+              ({{storages.count}})
 
+          .col-md-3
+            %div{ style: 'display: inline' }
+
+              %form{ role: 'form', action: "{% url 'storages_index' %}", method: 'post' }
+                 - csrf_token
+                 .input-group
+                   .form-group#storages_select_space
+                     = form|bootstrap
+                   %span.input-group-btn
+                     %button.btn.btn-success{ type: 'submit' }
+                       Show
+          .col-md-1
+            %a.btn.btn-primary{ href: "{% url 'storages_new' %}" }
+              Add
+          %br
+        %br
         .text-muted
           You can use any of those already created storages.
           If you need additional storages, please add them

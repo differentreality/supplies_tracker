@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import Item, Storage, Space, Items_Storage
-from .forms import item_form, storage_form, space_form, SignUpForm, LoginForm
+from .forms import item_form, storage_form, space_form, SignUpForm, LoginForm, space_dropdown_form
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -92,10 +92,30 @@ def items_new(request):
 
 @login_required
 def storages_index(request):
-  user_spaces = Space.objects.filter(user_id=request.user.id)
-  user_spaces = user_spaces.values_list('id', flat=True)
-  storages = Storage.objects.filter(space_id__in=user_spaces)
-  return render(request, 'storages/index.html.haml', { 'storages': storages, 'user_spaces': user_spaces })
+    user_spaces = Space.objects.filter(user_id=request.user.id)
+    user_spaces_ids = user_spaces.values_list('id', flat=True)
+
+    # If this is from the filter form (dropdown)
+    if request.method == 'POST':
+        selected_space_id = request.POST['space_id']
+        if selected_space_id == 'all':
+            storages = Storage.objects.filter(space_id__in=user_spaces_ids)
+        else:
+            storages = Storage.objects.filter(space_id=selected_space_id)
+        if request.user is not None:
+          form = space_dropdown_form(user = request.user)
+          form.fields['space_id'].initial = selected_space_id
+
+    # else this is the index
+    else:
+      storages = Storage.objects.filter(space_id__in=user_spaces_ids)
+      if request.user is not None:
+        form = space_dropdown_form(user = request.user)
+      selected_space_id = None
+    return render(request, 'storages/index.html.haml', { 'storages': storages,
+                                                         'user_spaces': user_spaces,
+                                                         'form': form ,
+                                                         'selected_space_id': selected_space_id })
 
 def storages_show(request, storage_id):
     try:
@@ -141,7 +161,7 @@ def storages_new(request, space_id=None):
             form = storage_form(None,None)
 
 
-    return render(request, 'storages/new.html.haml', { 'form': form , 'space': space})
+    return render(request, 'storages/new.html.haml', { 'form': form , 'space': space })
 
 @login_required
 def spaces_index(request):
