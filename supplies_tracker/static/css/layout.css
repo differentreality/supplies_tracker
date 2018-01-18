@@ -1,13 +1,39 @@
+html{
+  /*background-color: #01d7f9 !important;*/
+  background-color: #3ca4ff !important;
+}
+
 #content{
   width: 90%;
 }
 
 body {
-  padding-top: 90px !important;
+  padding-top: 20px !important;
+  margin: 50px !important;
 }
 
 footer {
   padding-top: 90px !important;
+  background-color:
+}
+
+.navbar-default {
+  background-color: #b7d1e7 !important;
+}
+
+.navbar-default a{
+  color: #2b3b40 !important;
+}
+
+.navbar-default li.active a {
+  color: #2b3b40 !important;
+  /*background-color: #01d7f9 !important;*/
+  background-color: #3ca4ff !important;
+
+}
+
+footer > .container-fluid{
+  background-color: #b7d1e7 !important;
 }
 
 .navbar li a {
@@ -28,6 +54,14 @@ footer {
 
 div.dataTables_length label{
   float: left !important;
+}
+
+.dataTables_filter{
+  float: right !important;
+}
+
+div.dataTables_filter input {
+  border-left: 1px solid #ccc !important;
 }
 
 form {
