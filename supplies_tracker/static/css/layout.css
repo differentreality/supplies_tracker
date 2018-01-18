@@ -33,3 +33,8 @@ div.dataTables_length label{
 form {
   display: inline !important;
 }
+
+/* Fix align in input-group with label */
+#storages_select_space .form-group {
+  margin-top: -5px;
+}
