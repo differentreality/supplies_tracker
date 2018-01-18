@@ -38,14 +38,13 @@
               %td=forloop.counter
                 %td=
                   %p
-                    {% if item.image %}
+                    - if item.image
                       {% thumbnail item.image "120x120" crop="center" as im %}
-                        %img{:height => "{{ im.height }}", :src => "{{ im.url }}", :width => "{{ im.width }}"}/
+                        %img{ height: '{{ im.height }}', src: '{{ im.url }}', width: '{{ im.width }}' }/
                           {% endthumbnail %}
-                            {% endif %}
               %td= item.name
 
-              %td{ style: "{% if item.items_storage_set.all.first.quantity < 5 %} background-color: #d9534f {% endif %}" }
+              %td{ style: "{% if item.items_storage_set.all.first.quantity < 5 %} background-color: #fffc8e {% endif %}" }
                 .col-md-4
                   = item.items_storage_set.all.first.quantity
                 .col-md-8
@@ -53,9 +52,12 @@
                     %a.btn.btn-success{ href: "{% url 'add_item' storage.id item.id %}", method: 'post' }
                       .fa.fa-plus
                       1
-                    %a.btn.btn-warning{ href: "{% url 'remove_item' storage.id item.id %}", method: 'post' }
+                    %a.btn.btn-danger{ href: "{% url 'remove_item' storage.id item.id %}", method: 'post' }
                       .fa.fa-minus
                       1
+                - if item.items_storage_set.all.first.quantity < 5
+                  .text-muted.text-center
+                    Attention: Low quantity!
 
 
               %td= item.description
