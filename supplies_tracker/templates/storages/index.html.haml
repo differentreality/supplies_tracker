@@ -8,10 +8,13 @@
           Your Storages
           - if storages.count > 0
             ({{storages.count}})
+           %a.pull-right.btn.btn-primary{ href: "{% url 'storages_new' %}" }
+            Add
 
         .text-muted
           You can use any of those already created storages.
           If you need additional storages, please add them
+
     .row
       .col-md-12
         %table.datatable.table.table-striped.table-hover#storages-table
