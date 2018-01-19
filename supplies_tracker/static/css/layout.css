@@ -1,6 +1,6 @@
 html{
-  /*background-color: #01d7f9 !important;*/
-  background-color: #3ca4ff !important;
+  background-color: #01d7f9 !important;
+  /*background-color: #3ca4ff !important;*/
 }
 
 #content{
@@ -27,8 +27,8 @@ footer {
 
 .navbar-default li.active a {
   color: #2b3b40 !important;
-  /*background-color: #01d7f9 !important;*/
-  background-color: #3ca4ff !important;
+  background-color: #01d7f9 !important;
+  /*background-color: #3ca4ff !important;*/
 
 }
 
