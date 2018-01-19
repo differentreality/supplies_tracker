@@ -43,7 +43,7 @@
                     %form.btn-group{ role: 'form', method: 'post', action: "{% url 'items_delete' item.id %}" }
                       - csrf_token
                       %input{ type: 'hidden', name: 'item_id', value: "{{ item.id }}" }
-                      %button.btn.btn-danger{ onclick: 'clicked(event)' }
+                      %button.btn.btn-danger{ onclick: 'clicked(event)'}
                         .fa.fa-times
                     %a.pull-right.btn.btn-primary{ href: "{% url 'items_add_to_storage' item.id %}"}
                       .fa.fa-plus

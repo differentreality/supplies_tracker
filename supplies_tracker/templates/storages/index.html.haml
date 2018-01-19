@@ -64,9 +64,9 @@
                       .fa.fa-eye
                     %a.btn.btn-primary{ href: "{% url 'storages_update' storage.id %}" }
                       .fa.fa-edit
-                    %form{ role: 'form', method: 'post', action: "{% url 'storages_delete' storage.id %}" }
+                    %form.btn-group{ role: 'form', method: 'post', action: "{% url 'storages_delete' storage.id %}" }
                       - csrf_token
-                      %button.btn.btn-danger{ type: 'submit'}
+                      %button.btn.btn-danger{ onclick: 'clicked(event)'}
                         .fa.fa-times
                     -if item_id
                       %a.btn.btn-primary{ href: "{% url 'items_add_existing_storage' item_id storage.id %}" }
