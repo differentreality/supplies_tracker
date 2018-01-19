@@ -38,7 +38,13 @@
                 %td=item.price_bought
                 %td
                   .btn-group
-                    -#Item ADD
+                    %a.btn.btn-primary{ href: "{% url 'items_update' item.id %}" }
+                      .fa.fa-edit
+                  %form{ role: 'form', method: 'post', action: "{% url 'items_delete' item.id %}" }
+                    - csrf_token
+                    %input{ type: 'hidden', name: 'item_id', value: "{{ item.id }}" }
+                    %button.btn.btn-danger{ type: 'submit'}
+                      .fa.fa-times
                     %a.pull-right.btn.btn-primary{ href: "{% url 'items_add_to_storage' item.id %}"}
                       .fa.fa-plus
                       Add Item to existing Storage
