@@ -14,8 +14,8 @@ class User(User):
 class Item(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
     description = models.TextField(null=True,blank=True)
-    price_bought = models.FloatField(default=0)
-    reimbursement = models.FloatField(default=0, null=True)
+    price_bought = models.FloatField(default=0, verbose_name="How much does this cost to buy?")
+    reimbursement = models.FloatField(default=0, null=True, verbose_name="How much do you make? (Fill if you sell the items, or provide them against donation)")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     storages = models.ManyToManyField('Storage', through='Items_Storage', related_name='Storage')
