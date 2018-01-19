@@ -35,6 +35,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_tools',
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,7 +83,8 @@ TEMPLATES = [
                 'hamlpy.template.loaders.HamlPyFilesystemLoader',
                 'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
                 'django.template.loaders.filesystem.Loader',
-                'django.template.loaders.app_directories.Loader'
+                'django.template.loaders.app_directories.Loader',
+                'admin_tools.template_loaders.Loader',
                 # 'django.utils.translation.template'
             ),
         },
@@ -135,7 +140,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
+STATIC_ROOT = 'supplies_tracker/static'
 STATIC_URL = '/static/'
 
 LOGIN_URL = 'login'

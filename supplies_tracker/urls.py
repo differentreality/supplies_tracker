@@ -25,6 +25,7 @@ from django.conf import  settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^admin/', include('admin_tools.urls')),
     url(r'^$', views.home, name='home.html.haml'),
 
     url(r'items$', views.items_index, name='items_index'),
