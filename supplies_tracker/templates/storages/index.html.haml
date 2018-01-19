@@ -13,15 +13,14 @@
 
           .col-md-3
             %div{ style: 'display: inline' }
-              -# Select space for storage ?? @angeanto
-              -#%form{ role: 'form', action: "{% url 'storages_index' %}", method: 'post' }
-              -#  - csrf_token
-              -#    = form.bootstrap
-              -#    .input-group
-              -#      .form-group#storages_select_space
-              -#        %span.input-group-btn
-              -#          %button.btn.btn-success{ type: 'submit' }
-                          Show
+              %form{ role: 'form', action: "{% url 'storages_index' %}", method: 'post' }
+                - csrf_token
+                .input-group
+                  .form-group#storages_select_space
+                    = form|bootstrap
+                  %span.input-group-btn
+                    %button.btn.btn-success{ type: 'submit' }
+                      Show
           .col-md-1
             %a.btn.btn-primary{ href: "{% url 'storages_new' %}" }
               Add
