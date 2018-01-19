@@ -13,6 +13,8 @@ from django.views import generic
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.db.models import Q
+from itertools import chain
 
 @login_required
 def items_index(request):
@@ -205,7 +207,18 @@ def spaces_new(request):
     return render(request, 'spaces/new.html.haml', { 'form': form })
 
 def home(request):
-    return render(request, 'home.html.haml')
+    search_keyword = request.GET.get('search-keyword')
+    search_results = None
+    if search_keyword is not None:
+        results = Space.objects.filter(Q(name__contains=search_keyword)|
+                                       Q(description__contains=search_keyword)|
+                                       Q(address__contains=search_keyword))
+        results2 = Storage.objects.filter(Q(name__contains='Fridge'))
+        search_results = enumerate(chain(results,results2))
+
+    return render(request, 'home.html.haml', { 'search_results': search_results })
+    # return render(request, 'spaces/index.html.haml', { 'enum_spaces': search_results })
+
 
 def users_show(request, user_id):
     try:

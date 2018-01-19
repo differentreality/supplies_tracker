@@ -15,6 +15,8 @@
           %li.active
             %a{ href: "{% url 'spaces_index' %}" } Your spaces
       %ul.nav.navbar-nav.navbar-right
+        %li{ style: 'width: 300px; height: 50px'}
+          - include 'search.html.haml'
         - if user.is_anonymous
           %li
             %a{ href: "{% url 'login' %}" }

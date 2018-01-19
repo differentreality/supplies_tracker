@@ -32,6 +32,9 @@ class Space(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     image = ImageField(upload_to='whatever',null=True, blank=True)
 
+    def class_name(self):
+      return self.__class__.__name__
+
 class Storage(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -39,6 +42,9 @@ class Storage(models.Model):
     space = models.ForeignKey(Space, on_delete=models.CASCADE, null=False)
     item = models.ManyToManyField(Item, through='Items_Storage', related_name='Item')
     image = ImageField(upload_to='whatever',null= True,blank=True)
+
+    def class_name(self):
+      return self.__class__.__name__
 
 class Items_Storage(models.Model) :
     items = models.ForeignKey(Item)
