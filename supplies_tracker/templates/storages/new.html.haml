@@ -12,7 +12,7 @@
               = space.name
     .row
       .col-md-6
-        %form{ role: 'form', :enctype => "multipart/form-data", method: 'post' }
+        %form{ role: 'form', enctype:' multipart/form-data' , method: 'post' }
           - csrf_token
           = form|bootstrap
           -# %input{ type: 'hidden', name: 'space_id', value: "{{ space.id }}" }
