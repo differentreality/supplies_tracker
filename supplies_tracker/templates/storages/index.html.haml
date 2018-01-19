@@ -47,7 +47,7 @@
               %tr
                 %td= forloop.counter
                 %td
-                  - include 'storages/_storage_thumbnail.html.haml' with object=storage
+                  - include '_thumbnail.html.haml' with object=storage
                 %td= storage.name
                 %td
                   = storage.space.name

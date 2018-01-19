@@ -12,8 +12,12 @@
     .collapse.navbar-collapse#menutoggle
       %ul.nav.navbar-nav
         - if not user.is_anonymous
-          %li.active
+          %li
             %a{ href: "{% url 'spaces_index' %}" } Your spaces
+          %li
+            %a{ href: "{% url 'storages_index' %}" } Your storages
+
+
       %ul.nav.navbar-nav.navbar-right
         %li{ style: 'width: 300px; height: 50px'}
           - include 'search.html.haml'
