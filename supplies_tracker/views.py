@@ -283,3 +283,30 @@ class UserUpdate(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         user_id = self.kwargs['pk']
         return reverse_lazy('users_show', kwargs={'user_id': user_id} )
+
+
+def items_add_to_storage(request,item_id):
+
+    try:
+        storages = Storage.objects.all()
+
+    except Space.DoesNotExist:
+        storages = None
+
+    if storages is None:
+        return render(request, 'error.html.haml')
+    else:
+        return render(request, 'storages/index.html.haml', {'item_id': item_id, 'storages': storages})
+
+
+def items_add_existing_storage(request, storage_id, item_id):
+
+    if storage_id is None:
+        return render(request, 'error.html.haml')
+    else:
+        if Items_Storage.objects.filter(storage_id=storage_id, items_id=item_id).exists():
+            return render(request, 'items_storage_unique_error.html.haml')
+        else:
+            new_item = Items_Storage(storage_id=storage_id, items_id=item_id)
+            new_item.save()
+            return HttpResponseRedirect(reverse('items_index'))
