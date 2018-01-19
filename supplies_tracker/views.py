@@ -15,6 +15,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.db.models import Q
 from itertools import chain
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 @login_required
 def items_index(request):
@@ -272,3 +273,13 @@ def login(request):
         form = LoginForm()
 
     return render(request, 'login.html.haml', { 'form': form })
+
+class UserUpdate(LoginRequiredMixin, UpdateView):
+    model = User
+    fields = ['username','first_name', 'last_name', 'email',]
+    template_name = 'users/edit.html.haml'
+    success_url = reverse_lazy('users_show')
+
+    def get_success_url(self):
+        user_id = self.kwargs['pk']
+        return reverse_lazy('users_show', kwargs={'user_id': user_id} )
