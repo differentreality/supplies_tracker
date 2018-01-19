@@ -72,3 +72,12 @@ form {
 #storages_select_space .form-group {
   margin-top: -5px;
 }
+
+.input-group {
+  padding: 10px
+}
+
+.form-control {
+  border-top-left-radius: 4px !important;
+  border-bottom-left-radius: 4px !important;
+}
