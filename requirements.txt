@@ -5,3 +5,5 @@ django-hamlpy==1.1.1
 django-jquery==3.1.0
 Pillow==5.0.0
 sorl-thumbnail==12.4.1
+django-admin-tools==0.8.1
+feedparser==5.2.1
