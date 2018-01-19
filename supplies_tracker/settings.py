@@ -29,7 +29,7 @@ SECRET_KEY = 'oz*^bg-_i9r=**-me%s(@7n)^5+zonhbta=-4osh5eqgj_&mwt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'suppliestracker.pythonanywhere.com']
 
 
 # Application definition
