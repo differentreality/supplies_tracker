@@ -5,11 +5,15 @@
     .col-md-12
       .page-header
         %h1
-          Your Spaces
+          - if user.is_anonymous
+            Available Spaces
+          - else
+            Your Spaces
           - if spaces.count > 0
             ({{spaces.count}})
-          %a.pull-right.btn.btn-primary{ href: "{% url 'spaces_new' %}" }
-            Add
+          - if not user.is_anonymous
+            %a.pull-right.btn.btn-primary{ href: "{% url 'spaces_new' %}" }
+              Add
         .text-muted
           View your created spaces.
           You can always create a new space for your needs
@@ -25,17 +29,16 @@
             %th Actions
 
           %tbody
-            - for _index, space in enum_spaces
+            - for space in spaces
               %tr
                 %td
                   =  forloop.counter
                   %td=
                     %p
-                      {% if space.image %}
-                        {% thumbnail space.image "120x120" crop="center" as im %}
+                      - if space.image
+                        - thumbnail space.image "120x120" crop="center" as im
                           %img{:height => "{{ im.height }}", :src => "{{ im.url }}", :width => "{{ im.width }}"}/
-                            {% endthumbnail %}
-                              {% endif %}
+                        - endthumbnail
                 %td=space.name
                 %td=space.description
                 %td=space.address
@@ -43,13 +46,16 @@
                   .btn-group
                     %a.btn.btn-success{ href: "{% url 'spaces_show' space.id %}" }
                       .fa.fa-eye
-                    %a.btn.btn-primary{ href: "{% url 'spaces_update' space.id %}" }
-                      .fa.fa-edit
-                    %a.btn.btn-primary{ href: "{% url 'storages_new' space.id%}" }
-                      .fa.fa-plus
+
+                    - if not user.is_anonymous
+                      %a.btn.btn-primary{ href: "{% url 'spaces_update' space.id %}" }
+                        .fa.fa-edit
+                      %a.btn.btn-primary{ href: "{% url 'storages_new' space.id%}", style: 'padding: 3px 12px 3px 12px;' }
+                        .fa.fa-plus
                         Storage
-                    %form.btn-group{ role: 'form', method: 'post', action: "{% url 'spaces_delete' space.id %}" }
-                      - csrf_token
-                      %input{ type: 'hidden', name: 'space_id', value: "{{ space.id }}" }
-                      %button.btn.btn-danger{ onclick: 'clicked(event)'}
-                        .fa.fa-times
+
+                      %form.btn-group{ role: 'form', method: 'post', action: "{% url 'spaces_delete' space.id %}" }
+                        - csrf_token
+                        %input{ type: 'hidden', name: 'space_id', value: "{{ space.id }}" }
+                        %button.btn.btn-danger{ onclick: 'clicked(event)'}
+                          .fa.fa-times

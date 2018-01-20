@@ -78,7 +78,7 @@ form {
   margin-top: -5px;
 }
 
-.input-group {
+.input-group#search-box {
   padding: 10px
 }
 

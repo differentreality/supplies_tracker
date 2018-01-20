@@ -7,7 +7,10 @@
       .page-header
         %h1
           .col-md-8
-            Your Storages
+            - if user.is_anonymous
+              Available Storages
+            - else
+              Your Storages
             - if storages.count > 0
               ({{storages.count}})
 
@@ -62,13 +65,14 @@
                   .btn-group
                     %a.btn.btn-success{ href: "{% url 'storages_show' storage.id %}" }
                       .fa.fa-eye
-                    %a.btn.btn-primary{ href: "{% url 'storages_update' storage.id %}" }
-                      .fa.fa-edit
-                    %form.btn-group{ role: 'form', method: 'post', action: "{% url 'storages_delete' storage.id %}" }
-                      - csrf_token
-                      %button.btn.btn-danger{ onclick: 'clicked(event)'}
-                        .fa.fa-times
-                    -if item_id
-                      %a.btn.btn-primary{ href: "{% url 'items_add_existing_storage' item_id storage.id %}" , style: 'padding: 3px 12px 3px 12px;'}
-                        .fa.fa-plus
-                        Add to this Storage
+                    - if not user.is_anonymous
+                      %a.btn.btn-primary{ href: "{% url 'storages_update' storage.id %}" }
+                        .fa.fa-edit
+                      %form.btn-group{ role: 'form', method: 'post', action: "{% url 'storages_delete' storage.id %}" }
+                        - csrf_token
+                        %button.btn.btn-danger{ onclick: 'clicked(event)'}
+                          .fa.fa-times
+                      -if item_id
+                        %a.btn.btn-primary{ href: "{% url 'items_add_existing_storage' item_id storage.id %}", style: 'padding: 3px 12px 3px 12px;' }
+                          .fa.fa-plus
+                          Add to this Storage

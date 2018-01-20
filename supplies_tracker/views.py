@@ -17,7 +17,7 @@ from django.db.models import Q
 from itertools import chain
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-@login_required
+# @login_required
 def items_index(request):
   items = Item.objects.all()
   return render(request, 'items/index.html.haml', { 'items': items })
@@ -93,9 +93,13 @@ def items_new(request):
 
     return render(request, 'items/new.html.haml', { 'form': form })
 
-@login_required
+# @login_required
 def storages_index(request):
-    user_spaces = Space.objects.filter(user_id=request.user.id)
+    if request.user.is_anonymous:
+        user_spaces = Space.objects.all()
+    else:
+        user_spaces = Space.objects.filter(user_id=request.user.id)
+
     user_spaces_ids = user_spaces.values_list('id', flat=True)
 
     # If this is from the filter form (dropdown)
@@ -108,13 +112,13 @@ def storages_index(request):
         if request.user is not None:
           form = space_dropdown_form(user = request.user)
           form.fields['space_id'].initial = selected_space_id
-
     # else this is the index
     else:
       storages = Storage.objects.filter(space_id__in=user_spaces_ids)
-      if request.user is not None:
-        form = space_dropdown_form(user = request.user)
+
+      form = space_dropdown_form(user = request.user)
       selected_space_id = None
+
     return render(request, 'storages/index.html.haml', { 'storages': storages,
                                                          'user_spaces': user_spaces,
                                                          'form': form ,
@@ -132,10 +136,10 @@ def storages_show(request, storage_id):
     if storage is None:
         return render(request, 'error.html.haml' )
     else:
-      if request.user.is_authenticated:
-        return render(request, 'storages/show.html.haml', { 'storage': storage, 'items': items })
+      if request.user.is_anonymous:
+          return render(request, 'storages/public.html.haml', { 'storage': storage, 'items': items })
       else:
-        return render(request, 'storages/public.html.haml', { 'storage': storage, 'items': items })
+          return render(request, 'storages/show.html.haml', { 'storage': storage, 'items': items })
 
 @login_required
 def storages_new(request, space_id=None):
@@ -166,17 +170,14 @@ def storages_new(request, space_id=None):
 
     return render(request, 'storages/new.html.haml', { 'form': form , 'space': space })
 
-@login_required
+# @login_required
 def spaces_index(request):
-  spaces = Space.objects.filter(user_id=request.user.id)
-  enum_spaces = enumerate(spaces)
-  return render(request, 'spaces/index.html.haml', { 'enum_spaces': enum_spaces })
+  if request.user.is_anonymous:
+      spaces = Space.objects.all()
+  else:
+      spaces = Space.objects.filter(user_id=request.user.id)
 
-#@login_required
-#def spaces_show(request, space_id):
- # space = Space.objects.get(id=space_id)
- # storages = Storage.objects.filter(space_id=space_id)
- # return render(request, 'spaces/show.html.haml', { 'space': space, 'storages': storages } )
+  return render(request, 'spaces/index.html.haml', { 'spaces': spaces })
 
 def spaces_show(request,space_id):
     try:
@@ -243,10 +244,10 @@ def signup(request):
             return redirect('home.html.haml')
     else:
         form = SignUpForm()
-    if request.user.is_authenticated():
-        return render(request, 'home.html.haml')
-    else:
+    if request.user.is_anonymous:
         return render(request, 'signup.html.haml', { 'form': form })
+    else:
+        return render(request, 'home.html.haml')
 
 def logout_view(request):
     logout(request)
@@ -282,7 +283,7 @@ class UserUpdate(LoginRequiredMixin, UpdateView):
         user_id = self.kwargs['pk']
         return reverse_lazy('users_show', kwargs={'user_id': user_id} )
 
-
+@login_required
 def items_add_to_storage(request,item_id):
     user_spaces = Space.objects.filter(user_id=request.user.id)
     user_spaces_ids = user_spaces.values_list('id', flat=True)
@@ -310,7 +311,7 @@ def items_add_to_storage(request,item_id):
                                                         'item_id': item_id,
                                                         'selected_space_id': selected_space_id})
 
-
+@login_required
 def items_add_existing_storage(request, storage_id, item_id):
 
     if storage_id is None:
