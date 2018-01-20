@@ -6,23 +6,28 @@
         %h2 Welcome!
   .row
     .col-md-12
-      %table.datatable.table.table-striped.table-hover#spaces-table
-        %thead
-          %th No
-          %th Type
-          %th Photo
-          %th Name
-          %th Description
+      Add spaces and managr their storages
 
-        %tbody
-          - for _index, result in search_results
-            %tr
-              %td
-                =  forloop.counter
-              %td
-                = result.class_name
-              %td
-                - include '_thumbnail.html.haml' with object=result
+  - if search_results
+    .row
+      .col-md-12
+        %table.datatable.table.table-striped.table-hover#spaces-table
+          %thead
+            %th No
+            %th Type
+            %th Photo
+            %th Name
+            %th Description
 
-              %td= result.name
-              %td= result.description
+          %tbody
+            - for _index, result in search_results
+              %tr
+                %td
+                  =  forloop.counter
+                %td
+                  = result.class_name
+                %td
+                  - include '_thumbnail.html.haml' with object=result
+
+                %td= result.name
+                %td= result.description
