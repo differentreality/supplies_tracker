@@ -69,6 +69,6 @@
                       %button.btn.btn-danger{ onclick: 'clicked(event)'}
                         .fa.fa-times
                     -if item_id
-                      %a.btn.btn-primary{ href: "{% url 'items_add_existing_storage' item_id storage.id %}" }
+                      %a.btn.btn-primary{ href: "{% url 'items_add_existing_storage' item_id storage.id %}" , style: 'padding: 3px 12px 3px 12px;'}
                         .fa.fa-plus
-                          Add to this Storage
+                        Add to this Storage
