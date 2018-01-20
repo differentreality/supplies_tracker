@@ -5,6 +5,10 @@ $(document).ready(function() {
   var oTable = $('.datatable').dataTable({
     responsive: true
   });
+
+  $('#search-keyword').on('click', function() {
+    $('#search-keyword').val('');
+  });
 });
 
 function clicked(e){

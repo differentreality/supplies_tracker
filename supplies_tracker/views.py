@@ -225,7 +225,7 @@ def users_show(request, user_id):
     try:
         user = User.objects.get(id=user_id)
         if user.is_active:
-            myclass = 'btn-primary'
+            myclass = 'btn-success'
         else:
             myclass = 'btn-danger'
 
