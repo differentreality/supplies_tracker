@@ -76,22 +76,24 @@ def remove_item(request, storage_id, item_id):
 
 @login_required
 def items_new(request):
-    storage_id = request.GET['storage_id']
+    if 'storage_id' in request.GET:
+        storage_id = request.GET['storage_id']
     if request.method == 'POST':
         form = item_form(request.POST,request.FILES)
         if form.is_valid():
             obj = Item(**form.cleaned_data)
             obj.user = request.user
-            storage = request.GET['storage_id']
             obj.save()
-            new_item = Items_Storage(storage=Storage.objects.get(id=storage), items=Item.objects.get(id=obj.id))
-            new_item.save()
-
-            return HttpResponseRedirect(reverse('storages_show', kwargs= {'storage_id': storage_id}))
+            if 'storage_id' in request.GET and request.GET['storage_id'] is not None and request.GET['storage_id'] != '':
+                storage_id = request.GET['storage_id']
+                new_item = Items_Storage(storage_id=storage_id, items=Item.objects.get(id=obj.id))
+                new_item.save()
+                return HttpResponseRedirect(reverse('storages_show', kwargs= {'storage_id': storage_id}))
+            else:
+                return HttpResponseRedirect(reverse('items_index'))
     else:
         form = item_form()
-
-    return render(request, 'items/new.html.haml', { 'form': form })
+        return render(request, 'items/new.html.haml', { 'form': form })
 
 # @login_required
 def storages_index(request):
