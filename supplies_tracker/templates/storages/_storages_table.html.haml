@@ -22,9 +22,10 @@
           .btn-group
             %a.btn.btn-success{ href: "{% url 'storages_show' storage.id %}" }
               .fa.fa-eye
-            %a.btn.btn-primary{ href: "{% url 'storages_update' storage.id %}" }
-              .fa.fa-edit
-            %form{ role: 'form', method: 'post', action: "{% url 'storages_delete' storage.id %}" }
-              - csrf_token
-              %button.btn.btn-danger{ type: 'submit' }
-                .fa.fa-times
+            - if not user.is_anonymous
+              %a.btn.btn-primary{ href: "{% url 'storages_update' storage.id %}" }
+                .fa.fa-edit
+              %form{ role: 'form', method: 'post', action: "{% url 'storages_delete' storage.id %}" }
+                - csrf_token
+                %button.btn.btn-danger{ type: 'submit' }
+                  .fa.fa-times

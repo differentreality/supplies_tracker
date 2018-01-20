@@ -20,7 +20,10 @@ class space_dropdown_form(forms.Form):
   def __init__(self, user, *args, **kwargs):
     super(space_dropdown_form, self).__init__(*args, **kwargs)
     #   if user is not None and user.id is not None:
-    self.fields['space_id'] = CustomModelChoiceField(label=' ', queryset=Space.objects.filter(user_id=user.id))
+    if user.is_anonymous:
+        self.fields['space_id'] = CustomModelChoiceField(label=' ', queryset=Space.objects.all())
+    else:
+        self.fields['space_id'] = CustomModelChoiceField(label=' ', queryset=Space.objects.filter(user_id=user.id))
     self.fields['space_id'].choices = [('all', 'All')] + \
                 list(self.fields["space_id"].choices)[1:]
 class storage_form(forms.Form):

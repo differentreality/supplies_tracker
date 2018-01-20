@@ -16,8 +16,13 @@
             %a{ href: "{% url 'spaces_index' %}" } Your spaces
           %li
             %a{ href: "{% url 'storages_index' %}" } Your storages
+        - else
           %li
-            %a{ href: "{% url 'items_index' %}" } Available items
+            %a{ href: "{% url 'spaces_index' %}" } Spaces
+          %li
+            %a{ href: "{% url 'storages_index' %}" } Storages
+        %li
+          %a{ href: "{% url 'items_index' %}" } Available items
 
 
       %ul.nav.navbar-nav.navbar-right
