@@ -65,7 +65,8 @@ div.dataTables_filter input, .form-control:focus {
 }
 
 .form-control:focus {
-  border-left: 1px solid #66afe9 !important;
+  border-color: #a3a2f9;
+  border-left: 1px solid #a3a2f9 !important;
 }
 
 form {
