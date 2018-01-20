@@ -213,12 +213,10 @@ def home(request):
         results = Space.objects.filter(Q(name__contains=search_keyword)|
                                        Q(description__contains=search_keyword)|
                                        Q(address__contains=search_keyword))
-        results2 = Storage.objects.filter(Q(name__contains='Fridge'))
+        results2 = Storage.objects.filter(Q(name__contains=search_keyword))
         search_results = enumerate(chain(results,results2))
 
     return render(request, 'home.html.haml', { 'search_results': search_results })
-    # return render(request, 'spaces/index.html.haml', { 'enum_spaces': search_results })
-
 
 def users_show(request, user_id):
     try:
