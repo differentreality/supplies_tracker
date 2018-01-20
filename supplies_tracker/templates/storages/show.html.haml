@@ -17,6 +17,9 @@
             %a.btn.btn-warning{ href: "{% url 'items_new' %}?storage_id={{ storage.id }}" }
               .fa.fa-plus
               Item
+            %a.btn.btn-success{ href: "{% url 'items_index' %}" }
+              .fa.fa-plus
+              Add existing Item
         .text-muted
           ({{ storage.space.name}})
   .row
