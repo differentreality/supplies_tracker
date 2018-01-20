@@ -48,9 +48,8 @@
                     %a.btn.btn-primary{ href: "{% url 'storages_new' space.id%}" }
                       .fa.fa-plus
                         Storage
-
-                    %form{ role: 'form', method: 'post', action: "{% url 'spaces_delete' space.id %}" }
+                    %form.btn-group{ role: 'form', method: 'post', action: "{% url 'spaces_delete' space.id %}" }
                       - csrf_token
                       %input{ type: 'hidden', name: 'space_id', value: "{{ space.id }}" }
-                      %button.btn.btn-danger{ type: 'submit'}
+                      %button.btn.btn-danger{ onclick: 'clicked(event)'}
                         .fa.fa-times
