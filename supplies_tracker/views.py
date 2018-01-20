@@ -323,4 +323,4 @@ def items_add_existing_storage(request, storage_id, item_id):
         else:
             new_item = Items_Storage(storage_id=storage_id, items_id=item_id)
             new_item.save()
-            return HttpResponseRedirect(reverse('items_index'))
+            return HttpResponseRedirect(reverse('storages_show', kwargs={'storage_id': storage_id}))
