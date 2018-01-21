@@ -162,7 +162,7 @@ def storages_new(request, space_id=None):
 
             obj.save()
 
-            return HttpResponseRedirect(reverse('spaces_show', args= space_id))
+            return HttpResponseRedirect(reverse('spaces_show', kwargs={ 'space_id': space_id}))
     else:
         if space_id is None:
           form = storage_form(user = request.user)
