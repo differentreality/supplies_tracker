@@ -47,7 +47,7 @@ class Storage(models.Model):
       return self.__class__.__name__
 
 class Items_Storage(models.Model) :
-    items = models.ForeignKey(Item)
+    item = models.ForeignKey(Item)
     storage = models.ForeignKey(Storage)
     date_added = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(null=False,blank=False,default=0)
@@ -55,4 +55,4 @@ class Items_Storage(models.Model) :
     price_donated = models.FloatField
 
     class Meta:
-        unique_together = (('storage', 'items'),)
+        unique_together = ('storage', 'item')
