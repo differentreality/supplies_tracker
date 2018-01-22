@@ -129,7 +129,7 @@ def storages_index(request):
 def storages_show(request, storage_id):
     try:
         storage = Storage.objects.get(id=storage_id)
-        items = storage.item.all()
+        items = Items_Storage.objects.filter(storage_id=storage_id)
 
     except Storage.DoesNotExist:
         storage = None
