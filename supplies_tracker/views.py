@@ -227,8 +227,11 @@ def home(request):
     user_spaces = Space.objects.filter(user_id=request.user.id)
 
     if search_keyword is not None:
-        user_spaces_ids = user_spaces.values_list('id', flat=True)
-        user_storages = Storage.objects.filter(space_id__in=user_spaces_ids)
+        if request.user.is_anonymous:
+            spaces_ids = Space.objects.values_list('id', flat=True)
+        else:
+            spaces_ids = user_spaces.values_list('id', flat=True)
+        user_storages = Storage.objects.filter(space_id__in=spaces_ids)
 
         results_spaces = user_spaces.filter(Q(name__contains=search_keyword)|
                                        Q(description__contains=search_keyword)|
