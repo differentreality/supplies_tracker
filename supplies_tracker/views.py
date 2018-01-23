@@ -227,16 +227,18 @@ def home(request):
     user_spaces = Space.objects.filter(user_id=request.user.id)
 
     if search_keyword is not None:
-        if request.user.is_anonymous:
-            spaces_ids = Space.objects.values_list('id', flat=True)
+        if request.user.is_authenticated:
+            spaces = Space.objects.filter(user_id=request.user.id)
         else:
-            spaces_ids = user_spaces.values_list('id', flat=True)
-        user_storages = Storage.objects.filter(space_id__in=spaces_ids)
+            spaces = Space.objects.all()
 
-        results_spaces = user_spaces.filter(Q(name__contains=search_keyword)|
+        spaces_ids = spaces.values_list('id', flat=True)
+        storages = Storage.objects.filter(space_id__in=spaces_ids)
+
+        results_spaces = spaces.filter(Q(name__contains=search_keyword)|
                                        Q(description__contains=search_keyword)|
                                        Q(address__contains=search_keyword))
-        results_storages = user_storages.filter(Q(name__contains=search_keyword))
+        results_storages = storages.filter(Q(name__contains=search_keyword))
         search_results = enumerate(chain(results_spaces,results_storages))
 
     return render(request, 'home.html.haml', { 'search_results': search_results, 'user_spaces': user_spaces })
