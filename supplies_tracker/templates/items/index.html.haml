@@ -6,8 +6,11 @@
       .page-header
         %h1
           This is a list of all available items
-          %a.pull-right.btn.btn-primary{ href: "{% url 'items_new' %}" }
-            Add
+          - if items.count > 0
+            ({{items.count}})
+          - if not user.is_anonymous
+            %a.pull-right.btn.btn-primary{ href: "{% url 'items_new' %}" }
+              Add
         .text-muted
           You can use any of those items to add them to your storage.
           If you need additional items, please add them
@@ -37,17 +40,24 @@
                 %td=item.description
                 %td=item.price_bought
                 %td
-                  .btn-group
-                    %a.btn.btn-primary{ href: "{% url 'items_update' item.id %}" }
-                      .fa.fa-edit
-                    %form.btn-group{ role: 'form', method: 'post', action: "{% url 'items_delete' item.id %}" }
-                      - csrf_token
-                      %input{ type: 'hidden', name: 'item_id', value: "{{ item.id }}" }
-                      %button.btn.btn-danger{ onclick: 'clicked(event)'}
-                        .fa.fa-times
-                    %a.pull-right.btn.btn-primary{ href: "{% url 'items_add_to_storage' item.id %}", style: 'padding: 3px 12px 3px 12px;'}
-                      .fa.fa-plus
-                      Add Item to existing Storage
-
-
-
+                  - if user.is_anonymous
+                    .btn-group-vertical
+                      %a.btn.btn-success{ href: "{% url 'items_show' item.id %}" }
+                        .fa.fa-eye
+                      %a.btn.btn-primary{ href: "{% url 'items_add_to_storage' item.id %}", style: 'padding: 3px 12px 3px 12px;'}
+                        .fa.fa-plus
+                        Add Item to existing Storage
+                    - else
+                      .btn-group
+                        %a.btn.btn-success{ href: "{% url 'items_show' item.id %}" }
+                          .fa.fa-eye
+                        %a.btn.btn-primary{ href: "{% url 'items_update' item.id %}" }
+                          .fa.fa-edit
+                        %form.btn-group{ role: 'form', method: 'post', action: "{% url 'items_delete' item.id %}" }
+                          - csrf_token
+                          %input{ type: 'hidden', name: 'item_id', value: "{{ item.id }}" }
+                          %button.btn.btn-danger{ onclick: 'clicked(event)'}
+                            .fa.fa-times
+                      %a.btn.btn-primary{ href: "{% url 'items_add_to_storage' item.id %}", style: 'padding: 3px 12px 3px 12px;'}
+                        .fa.fa-plus
+                        Add Item to existing Storage

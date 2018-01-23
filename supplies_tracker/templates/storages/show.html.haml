@@ -49,7 +49,7 @@
 
               %td{ style: "{% if item_storage.quantity < 6 %} background-color: #fffc8e {% endif %}" }
                 .col-md-4
-                  =item_storage.quantity
+                  = item_storage.quantity
                 .col-md-8
                   .btn-group-vertical
                     %a.btn.btn-success{ href: "{% url 'add_item' storage.id item_storage.item.id %}", method: 'post' }
