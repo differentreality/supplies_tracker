@@ -36,26 +36,26 @@
           %th Actions
 
         %tbody
-          - for item in items
+          - for item_storage in items
             %tr
               %td=forloop.counter
                 %td=
                   %p
-                    - if item.item.image
-                      {% thumbnail item.item.image "120x120" crop="center" as im %}
+                    - if item_storage.item.image
+                      {% thumbnail item_storage.item.image "120x120" crop="center" as im %}
                         %img{ height: '{{ im.height }}', src: '{{ im.url }}', width: '{{ im.width }}' }/
                           {% endthumbnail %}
-              %td= item.item.name
+              %td= item_storage.item.name
 
-              %td{ style: "{% if item.items_storage_set.all.first.quantity < 5 %} background-color: #fffc8e {% endif %}" }
+              %td{ style: "{% if item_storage.quantity < 6 %} background-color: #fffc8e {% endif %}" }
                 .col-md-4
-                  =item.quantity
+                  =item_storage.quantity
                 .col-md-8
                   .btn-group-vertical
-                    %a.btn.btn-success{ href: "{% url 'add_item' storage.id item.item.id %}", method: 'post' }
+                    %a.btn.btn-success{ href: "{% url 'add_item' storage.id item_storage.item.id %}", method: 'post' }
                       .fa.fa-plus
                       1
-                    %a.btn.btn-danger{ href: "{% url 'remove_item' storage.id item.item.id %}", method: 'post' }
+                    %a.btn.btn-danger{ href: "{% url 'remove_item' storage.id item_storage.item.id %}", method: 'post' }
                       .fa.fa-minus
                       1
                 - if item.items_storage_set.all.first.quantity < 5
@@ -63,15 +63,15 @@
                     Attention: Low quantity!
 
 
-              %td= item.item.description
-              %td= item.item.price_bought
-              %td= item.item.reimbursement
+              %td= item_storage.item.description
+              %td= item_storage.item.price_bought
+              %td= item_storage.item.reimbursement
               %td
                 .btn-group
-                  %a.btn.btn-primary{ href: "{% url 'items_update' item.item.id %}" }
+                  %a.btn.btn-primary{ href: "{% url 'items_update' item_storage.item.id %}" }
                     .fa.fa-edit
 
-                  %form.btn-group{ role: 'form', method: 'post', action: "{% url 'items_delete' item.item.id %}" }
+                  %form.btn-group{ role: 'form', method: 'post', action: "{% url 'items_delete' item_storage.item.id %}" }
                     - csrf_token
                     %button.btn.btn-danger{ onclick: 'clicked(event)' }
                       .fa.fa-times
