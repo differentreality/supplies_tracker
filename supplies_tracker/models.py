@@ -5,12 +5,16 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from sorl.thumbnail import ImageField
 
+##
+# For the users of the application
 class User(User):
     def name(self):
         return self.first_name + self.last_name
     class Meta:
       proxy = True
 
+##
+# For the items used
 class Item(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
     description = models.TextField(null=True,blank=True)
@@ -21,6 +25,8 @@ class Item(models.Model):
     storages = models.ManyToManyField('Storage', through='Items_Storage', related_name='Storage')
     image = ImageField(upload_to='whatever',null= True,blank = True)
 
+##
+# For the spaces created
 class Space(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
@@ -32,9 +38,15 @@ class Space(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     image = ImageField(upload_to='whatever',null=True, blank=True)
 
+    ##
+    # Returns the class of the object
+    # ==== Returns
+    # * +String+ -> 'Space'
     def class_name(self):
       return self.__class__.__name__
 
+##
+# For the storages of the spaces
 class Storage(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -43,16 +55,22 @@ class Storage(models.Model):
     item = models.ManyToManyField(Item, through='Items_Storage', related_name='Item')
     image = ImageField(upload_to='whatever',null= True,blank=True)
 
+    ##
+    # Returns the class of the object
+    # ==== Returns
+    # * +String+ -> 'Storage'
     def class_name(self):
       return self.__class__.__name__
 
+##
+# The join model for the many-to-many relationship
+# between Item and Storage
+# It also has additional attributes
 class Items_Storage(models.Model) :
     item = models.ForeignKey(Item)
     storage = models.ForeignKey(Storage)
     date_added = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(null=False,blank=False,default=0)
-    price_bought = models.FloatField
-    price_donated = models.FloatField
 
     class Meta:
         unique_together = ('storage', 'item')
