@@ -3,7 +3,6 @@
     %th No
     %th Storage Photo
     %th Name
-    %th Address of Space
     %th Updated At
     %th Created at
     %th Actions
@@ -15,7 +14,6 @@
         %td
           - include '_thumbnail.html.haml' with object=storage
         %td= storage.name
-        %td= storage.space.address
         %td= storage.updated_at
         %td= storage.created_at
         %td
@@ -25,7 +23,7 @@
             - if not user.is_anonymous
               %a.btn.btn-primary{ href: "{% url 'storages_update' storage.id %}" }
                 .fa.fa-edit
-              %form{ role: 'form', method: 'post', action: "{% url 'storages_delete' storage.id %}" }
+              %form.btn-group{ role: 'form', method: 'post', action: "{% url 'storages_delete' storage.id %}" }
                 - csrf_token
                 %button.btn.btn-danger{ type: 'submit' }
                   .fa.fa-times

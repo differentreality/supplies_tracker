@@ -10,11 +10,12 @@
           Items in
           = storage.name
           .btn-group-vertical#storage-sums
-            %label.btn.btn-warning
-              .fa.fa-tag
-              Cost
-              %b {{ items_cost.price_bought__sum|floatformat:2 }}
-              euro.
+            - if items_reimbursement.price_bought__sum > 0
+              %label.btn.btn-warning
+                .fa.fa-tag
+                Cost
+                %b {{ items_cost.price_bought__sum|floatformat:2 }}
+                euro.
             - if items_reimbursement.reimbursement__sum > 0
               %label.btn.btn-success
                 .fa.fa-tags
@@ -33,8 +34,9 @@
               .fa.fa-plus
               Add existing Item
         .text-muted
-          .fa.fa-map-marker
-          = storage.space.name
+          %div{ title: "{{ storage.space.address }}"}
+            .fa.fa-map-marker
+            = storage.space.name
 
   .row
     .col-md-12

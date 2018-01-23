@@ -51,15 +51,14 @@
                   - include '_thumbnail.html.haml' with object=storage
                 %td= storage.name
                 %td
-                  = storage.space.name
+                  %a.btn.btn-default{ href: "{% url 'spaces_show' storage.space.id %}" }
+                    = storage.space.name
                   .text-muted
                     = storage.space.description
-                    - if storage.space.address != ' '
+                    - if storage.space.address
                       %br
                       %i.fa.fa-map-marker
                       = storage.space.address
-                  %a.btn.btn-primary{ href: "{% url 'storages_new' storage.space.id%}" }
-                    Add Storage
                 %td
                   .btn-group
                     %a.btn.btn-success{ href: "{% url 'storages_show' storage.id %}" }

@@ -44,9 +44,6 @@
                     .btn-group-vertical
                       %a.btn.btn-success{ href: "{% url 'items_show' item.id %}" }
                         .fa.fa-eye
-                      %a.btn.btn-primary{ href: "{% url 'items_add_to_storage' item.id %}", style: 'padding: 3px 12px 3px 12px;'}
-                        .fa.fa-plus
-                        Add Item to existing Storage
                     - else
                       .btn-group
                         %a.btn.btn-success{ href: "{% url 'items_show' item.id %}" }

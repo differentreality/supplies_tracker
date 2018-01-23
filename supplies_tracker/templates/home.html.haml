@@ -29,5 +29,17 @@
                 %td
                   - include '_thumbnail.html.haml' with object=result
 
-                %td= result.name
-                %td= result.description
+                %td
+                  - if result.class_name == 'Space'
+                    %a.btn.btn-default{ href: "{% url 'spaces_show' result.id %}" }
+                      = result.name
+                  - else
+                    %a.btn.btn-default{ href: "{% url 'storages_show' result.id %}" }
+                      = result.name
+
+                %td
+                  = result.description
+                  - if result.class_name == 'Storage' and result.space.address
+                    .text-muted
+                      .fa.fa-map-marker
+                      = result.space.address

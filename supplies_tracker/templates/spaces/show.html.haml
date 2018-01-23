@@ -5,20 +5,25 @@
   .row
     .col-md-12
       .page-header
-        %h2= space.name
-        .text-muted
-          = space.description
-  .row
-    .col-md-12
-      .page-header
-        %h3
-          Available storages
-          ({{ storages.count }})
+        %h2
+          = space.name
           - if not user.is_anonymous
             %a.pull-right.btn.btn-primary{ href: "{% url 'storages_new' space.id%}" }
               .fa.fa-plus
               Add Storage
+        .text-muted
+          = space.description
+          - if space.address
+            .fa.fa-map-marker
+            = space.address
+  .row
+    .col-md-12
+        %h2
+          Available storages
+          ({{ storages.count }})
+
       - if storages
-        - include 'storages/_storages_table.html.haml'
+        .well
+          - include 'storages/_storages_table.html.haml'
       - else
         There are no available storages. Please add one!
