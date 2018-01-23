@@ -10,8 +10,16 @@
           = storage.name
         .text-muted
           = storage.description
+          %div{ title: "{{ storage.space.address }}"}
+            %a{ href: "{% url 'spaces_show' storage.space.id%}" }
+              .fa.fa-map-marker
+              = storage.space.name
   .row.row-eq-height
     .col-md-12
+      - if items.count == 0
+        .well
+          %h4 There are no items in this storage yet!
+
       - for item_storage in items
         .col-md-4.col-sm-12.col-xs-12
           .panel.panel-default
