@@ -16,6 +16,7 @@ from django.urls import reverse
 from django.db.models import Q
 from itertools import chain
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
 
 # @login_required
 def items_index(request):
@@ -135,6 +136,8 @@ def storages_show(request, storage_id):
     try:
         storage = Storage.objects.get(id=storage_id)
         items = Items_Storage.objects.filter(storage_id=storage_id)
+        items_cost_sum = storage.item.aggregate(Sum('price_bought'))
+        items_reimbursement_sum = storage.item.aggregate(Sum('reimbursement'))
 
     except Storage.DoesNotExist:
         storage = None
@@ -146,7 +149,10 @@ def storages_show(request, storage_id):
       if request.user.is_anonymous:
           return render(request, 'storages/public.html.haml', { 'storage': storage, 'items': items })
       else:
-          return render(request, 'storages/show.html.haml', { 'storage': storage, 'items': items })
+          return render(request, 'storages/show.html.haml', { 'storage': storage,
+                                                              'items': items,
+                                                              'items_cost': items_cost_sum,
+                                                              'items_reimbursement': type(items_reimbursement_sum) })
 
 @login_required
 def storages_new(request, space_id=None):

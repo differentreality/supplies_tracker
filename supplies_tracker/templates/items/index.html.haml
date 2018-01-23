@@ -58,6 +58,7 @@
                           %input{ type: 'hidden', name: 'item_id', value: "{{ item.id }}" }
                           %button.btn.btn-danger{ onclick: 'clicked(event)'}
                             .fa.fa-times
+                      %br
                       %a.btn.btn-primary{ href: "{% url 'items_add_to_storage' item.id %}", style: 'padding: 3px 12px 3px 12px;'}
                         .fa.fa-plus
                         Add Item to existing Storage
