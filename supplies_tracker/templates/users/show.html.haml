@@ -4,18 +4,19 @@
     .col-md-12
       .page-header
         %h1
-          = user.get_full_name
 
-          %label.pull-left.btn{ class: myclass }
+          %label.btn.btn-xs{ class: myclass, style: 'vertical-align: middle' }
             - if user.is_active
               Active
             - else
               Not active
+          = user.get_full_name
+
           %label.pull-right.btn
             .btn-group
               %a.btn.btn-primary{ href: "{% url 'user_update' user.id %}" }
                 .fa.fa-edit
-                  Edit Profile
+                Edit Profile
 
   .row
     .col-md-12
@@ -31,5 +32,3 @@
           %dd= user.last_name
           %dt Date joined
           %dd= user.date_joined
-
-
