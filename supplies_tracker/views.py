@@ -224,8 +224,9 @@ def spaces_new(request):
 def home(request):
     search_keyword = request.GET.get('search-keyword')
     search_results = None
+    user_spaces = Space.objects.filter(user_id=request.user.id)
+
     if search_keyword is not None:
-        user_spaces = Space.objects.filter(user_id=request.user.id)
         user_spaces_ids = user_spaces.values_list('id', flat=True)
         user_storages = Storage.objects.filter(space_id__in=user_spaces_ids)
 
@@ -235,7 +236,7 @@ def home(request):
         results_storages = user_storages.filter(Q(name__contains=search_keyword))
         search_results = enumerate(chain(results_spaces,results_storages))
 
-    return render(request, 'home.html.haml', { 'search_results': search_results })
+    return render(request, 'home.html.haml', { 'search_results': search_results, 'user_spaces': user_spaces })
 
 def users_show(request, user_id):
     try:

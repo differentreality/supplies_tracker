@@ -1,12 +1,12 @@
 - extends 'application.html.haml'
 - block content
   .row
-    .col-md-12
+    .col-md-12{ style: 'text-align: center'}
       .page-header
-        %h2 Welcome!
-  .row
-    .col-md-12
-      Add spaces and manage their storages
+        %h3
+          Welcome to Supplies Tracker!
+          .text-muted
+            Add spaces and manage their storages
 
   - if search_results
     .row
@@ -43,3 +43,16 @@
                     .text-muted
                       .fa.fa-map-marker
                       = result.space.address
+  - else
+    - if user_spaces.count == 0
+      .row
+        .col-md-12.well{ style: 'text-align: center' }
+          %h4
+            It seems you haven't added any spaces yet.
+            %br
+            Get started now!
+            %br
+            %br
+            %a.btn.btn-success{ href: "{% url 'spaces_new' %}" }
+              .fa.fa-plus
+              Add New Space
