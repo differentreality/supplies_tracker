@@ -1,13 +1,23 @@
 - extends 'application.html.haml'
-- block content
-  .row
-    .col-md-12{ style: 'text-align: center'}
-      .page-header
-        %h3
-          Welcome to Supplies Tracker!
-          .text-muted
-            Add spaces and manage their storages
+- load thumbnail
+- load staticfiles
 
+- block homepage
+  .container{ style: 'width: 100%; margin-bottom: 50px; background-color: #5b98cc;'}
+    .row
+      .col-md-12{ style: 'text-align: center'}
+        .page-header
+          %h3
+            %b Welcome to Supplies Tracker!
+            .text-muted{ style: 'color: #ffff'}
+              Create Spaces, manage storages, and never miss a thing!
+    .row{ style: 'background-color: #5b98cc; padding-top: 20px; padding-bottom: 10px !important' }
+      .col-md-12
+        -# .well{ style: 'background-color: #5b98cc; text-align: center'}
+        %div{ style: 'text-align: center; padding-bottom: 20px'}
+          %img{ src: "{% static 'images/logo.png' %}", style: 'border-radius: 50%; width: 20%; height: 30%' }
+
+- block content
   - if search_results
     .row
       .col-md-12

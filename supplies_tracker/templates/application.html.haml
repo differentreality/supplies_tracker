@@ -6,10 +6,12 @@
     %link{ rel: "stylesheet", href: "{% static 'fontawesome/css/font-awesome.min.css' %}" }
     %link{ rel: "stylesheet", href: "{% static 'table/css/datatable.bootstrap.css' %}" }
     %link{ rel: 'stylesheet', href: "{% static 'css/layout.css' %}" }
+    %link{ rel: "shortcut icon", href: "{%  static 'images/favicon.ico' %}" }
 
     %title Supplies Tracker
   %body
     - include 'navbar.html.haml'
+    - block homepage
 
     .container#content
       .row
