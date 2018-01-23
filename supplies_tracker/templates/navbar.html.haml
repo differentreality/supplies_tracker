@@ -35,9 +35,10 @@
           %li
             %a{ href: "{% url 'signup' %}" } Sign up
         - else
-          %li
-            %a{ href: '/admin'}
-              Admin
+          - if user.is_superuser
+            %li
+              %a{ href: '/admin'}
+                Admin
           %li
             %a{ href: "{% url 'logout' %}" }
               Logout
