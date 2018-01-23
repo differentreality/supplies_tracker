@@ -86,7 +86,7 @@ def items_new(request):
             obj.save()
             if 'storage_id' in request.GET and request.GET['storage_id'] is not None and request.GET['storage_id'] != '':
                 storage_id = request.GET['storage_id']
-                new_item = Items_Storage(storage_id=storage_id, items=Item.objects.get(id=obj.id))
+                new_item = Items_Storage(storage_id=storage_id, item=Item.objects.get(id=obj.id))
                 new_item.save()
                 return HttpResponseRedirect(reverse('storages_show', kwargs= {'storage_id': storage_id}))
             else:
@@ -319,9 +319,9 @@ def items_add_existing_storage(request, storage_id, item_id):
     if storage_id is None:
         return render(request, 'error.html.haml')
     else:
-        if Items_Storage.objects.filter(storage_id=storage_id, items_id=item_id).exists():
+        if Items_Storage.objects.filter(storage_id=storage_id, item_id=item_id).exists():
             return render(request, 'items_storage_unique_error.html.haml')
         else:
-            new_item = Items_Storage(storage_id=storage_id, items_id=item_id)
+            new_item = Items_Storage(storage_id=storage_id, item_id=item_id)
             new_item.save()
             return HttpResponseRedirect(reverse('storages_show', kwargs={'storage_id': storage_id}))
