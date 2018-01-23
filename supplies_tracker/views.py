@@ -152,7 +152,7 @@ def storages_show(request, storage_id):
           return render(request, 'storages/show.html.haml', { 'storage': storage,
                                                               'items': items,
                                                               'items_cost': items_cost_sum,
-                                                              'items_reimbursement': type(items_reimbursement_sum) })
+                                                              'items_reimbursement': items_reimbursement_sum })
 
 @login_required
 def storages_new(request, space_id=None):
