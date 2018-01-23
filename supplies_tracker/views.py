@@ -225,11 +225,15 @@ def home(request):
     search_keyword = request.GET.get('search-keyword')
     search_results = None
     if search_keyword is not None:
-        results = Space.objects.filter(Q(name__contains=search_keyword)|
+        user_spaces = Space.objects.filter(user_id=request.user.id)
+        user_spaces_ids = user_spaces.values_list('id', flat=True)
+        user_storages = Storage.objects.filter(space_id__in=user_spaces_ids)
+
+        results_spaces = user_spaces.filter(Q(name__contains=search_keyword)|
                                        Q(description__contains=search_keyword)|
                                        Q(address__contains=search_keyword))
-        results2 = Storage.objects.filter(Q(name__contains=search_keyword))
-        search_results = enumerate(chain(results,results2))
+        results_storages = user_storages.filter(Q(name__contains=search_keyword))
+        search_results = enumerate(chain(results_spaces,results_storages))
 
     return render(request, 'home.html.haml', { 'search_results': search_results })
 
@@ -254,7 +258,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             auth_login(request, user)
-            return redirect('home.html.haml')
+            return redirect('home')
     else:
         form = SignUpForm()
     if request.user.is_anonymous:
