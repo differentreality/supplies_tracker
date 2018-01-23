@@ -50,7 +50,7 @@ class Items_Storage(models.Model) :
     items = models.ForeignKey(Item)
     storage = models.ForeignKey(Storage)
     date_added = models.DateTimeField(auto_now_add=True)
-    quantity = models.IntegerField(null=True,blank=False,default=0)
+    quantity = models.IntegerField(null=False,blank=False,default=0)
     price_bought = models.FloatField
     price_donated = models.FloatField
 
