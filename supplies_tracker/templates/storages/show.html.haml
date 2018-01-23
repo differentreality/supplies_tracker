@@ -41,21 +41,21 @@
               %td=forloop.counter
                 %td=
                   %p
-                    - if item.image
-                      {% thumbnail item.image "120x120" crop="center" as im %}
+                    - if item.item.image
+                      {% thumbnail item.item.image "120x120" crop="center" as im %}
                         %img{ height: '{{ im.height }}', src: '{{ im.url }}', width: '{{ im.width }}' }/
                           {% endthumbnail %}
-              %td= item.name
+              %td= item.item.name
 
               %td{ style: "{% if item.items_storage_set.all.first.quantity < 5 %} background-color: #fffc8e {% endif %}" }
                 .col-md-4
-                  = item.items_storage_set.all.first.quantity
+                  =item.quantity
                 .col-md-8
                   .btn-group-vertical
-                    %a.btn.btn-success{ href: "{% url 'add_item' storage.id item.id %}", method: 'post' }
+                    %a.btn.btn-success{ href: "{% url 'add_item' storage.id item.item.id %}", method: 'post' }
                       .fa.fa-plus
                       1
-                    %a.btn.btn-danger{ href: "{% url 'remove_item' storage.id item.id %}", method: 'post' }
+                    %a.btn.btn-danger{ href: "{% url 'remove_item' storage.id item.item.id %}", method: 'post' }
                       .fa.fa-minus
                       1
                 - if item.items_storage_set.all.first.quantity < 5
@@ -63,15 +63,15 @@
                     Attention: Low quantity!
 
 
-              %td= item.description
-              %td= item.price_bought
-              %td= item.reimbursement
+              %td= item.item.description
+              %td= item.item.price_bought
+              %td= item.item.reimbursement
               %td
                 .btn-group
-                  %a.btn.btn-primary{ href: "{% url 'items_update' item.id %}" }
+                  %a.btn.btn-primary{ href: "{% url 'items_update' item.item.id %}" }
                     .fa.fa-edit
 
-                  %form.btn-group{ role: 'form', method: 'post', action: "{% url 'items_delete' item.id %}" }
+                  %form.btn-group{ role: 'form', method: 'post', action: "{% url 'items_delete' item.item.id %}" }
                     - csrf_token
                     %button.btn.btn-danger{ onclick: 'clicked(event)' }
                       .fa.fa-times
