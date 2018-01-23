@@ -86,3 +86,7 @@ form {
   border-top-left-radius: 4px !important;
   border-bottom-left-radius: 4px !important;
 }
+
+#storage-sums{
+  padding-left: 5% !important;
+}

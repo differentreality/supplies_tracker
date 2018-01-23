@@ -9,6 +9,18 @@
         %h2
           Items in
           = storage.name
+          .btn-group-vertical#storage-sums
+            %label.btn.btn-warning
+              .fa.fa-tag
+              Cost
+              %b {{ items_cost.price_bought__sum|floatformat:2 }}
+              euro.
+            - if items_reimbursement.reimbursement__sum > 0
+              %label.btn.btn-success
+                .fa.fa-tags
+                Reimbursement
+                %b {{ items_reimbursement.reimbursement__sum|floatformat:2 }}
+                euro.
 
           .btn-group.pull-right
             %a.btn.btn-primary{ href: "{% url 'storages_update' storage.id%}" }
@@ -23,13 +35,7 @@
         .text-muted
           .fa.fa-map-marker
           = storage.space.name
-          = '- the remaining items in the fridge cost you'
-          {{ items_cost.price_bought__sum }}
-          euro.
-          {{ items_reimbursement }}
-          - if items_reimbursement.reimbursement_sum > 0
-            You will be reimbursed with
-            euro.
+
   .row
     .col-md-12
       %table.datatable.table.table-striped.table-hover#spaces-table
