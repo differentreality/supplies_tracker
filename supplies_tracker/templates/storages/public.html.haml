@@ -1,6 +1,5 @@
 - extends 'application.html.haml'
-
-{% load thumbnail %}
+- load thumbnail
 - block content
 
   .row
@@ -14,6 +13,7 @@
             %a{ href: "{% url 'spaces_show' storage.space.id%}" }
               .fa.fa-map-marker
               = storage.space.name
+
   .row.row-eq-height
     .col-md-12
       - if items.count == 0

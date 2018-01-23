@@ -7,3 +7,4 @@ Pillow==5.0.0
 sorl-thumbnail==12.4.1
 django-admin-tools==0.8.1
 feedparser==5.2.1
+django_easy_maps==0.9.3

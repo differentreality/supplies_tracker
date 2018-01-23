@@ -39,9 +39,9 @@
                         - thumbnail space.image "120x120" crop="center" as im
                           %img{:height => "{{ im.height }}", :src => "{{ im.url }}", :width => "{{ im.width }}"}/
                         - endthumbnail
-                %td=space.name
-                %td=space.description
-                %td=space.address
+                %td= space.name
+                %td= space.description
+                %td= space.address
                 %td
                   .btn-group
                     %a.btn.btn-success{ href: "{% url 'spaces_show' space.id %}" }

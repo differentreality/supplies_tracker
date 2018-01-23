@@ -51,8 +51,11 @@ INSTALLED_APPS = [
     'fontawesome',
     'bootstrapform',
     'supplies_tracker',
-    'sorl.thumbnail'
+    'sorl.thumbnail',
+    'easy_maps',
 ]
+
+EASY_MAPS_GOOGLE_MAPS_API_KEY = 'AIzaSyDJjpyz4CTXTuVqRunwcFWGLciSg5Dapm0'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
