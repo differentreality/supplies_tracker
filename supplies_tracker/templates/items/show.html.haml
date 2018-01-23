@@ -1,4 +1,37 @@
 - extends 'application.html.haml'
 
 - block content
-  
+  .row
+    .col-md-12
+      .page-header
+        %h1
+          Item
+          %b= item.name
+          is available in
+          {{items_storages.count}}
+          storages
+  .row
+    .col-md-12
+      .well
+        %table.table.table-striped.table-borderd.datatable#table-item-in-storages
+          %thead
+            %th No
+            %th Image
+            %th Name
+            %th Quantity
+            %th Space
+          %tbody
+            - for item_storage in items_storages
+              %tr
+                %td= forloop.counter
+                %td
+                  - include '_thumbnail.html.haml' with object=item_storage.storage
+                %td
+                  %a.btn.btn-default{ href: "{% url 'storages_show' item_storage.storage.id %}" }
+                    = item_storage.storage.name
+                %td= item_storage.quantity
+                %td
+                  %a.btn.btn-default{ href: "{% url 'spaces_show' item_storage.storage.space.id %}" }
+                    = item_storage.storage.space.name
+                  .text-muted
+                    = item_storage.storage.space.address

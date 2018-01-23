@@ -95,6 +95,11 @@ def items_new(request):
         form = item_form()
         return render(request, 'items/new.html.haml', { 'form': form })
 
+def items_show(request, item_id):
+    item = Item.objects.get(id=item_id)
+    items_storages = Items_Storage.objects.filter(item_id=item_id)
+    return render(request, 'items/show.html.haml', { 'item': item, 'items_storages': items_storages })
+
 # @login_required
 def storages_index(request):
     if request.user.is_anonymous:
@@ -286,7 +291,7 @@ class UserUpdate(LoginRequiredMixin, UpdateView):
         return reverse_lazy('users_show', kwargs={'user_id': user_id} )
 
 @login_required
-def items_add_to_storage(request,item_id):
+def items_add_to_storage(request, item_id):
     user_spaces = Space.objects.filter(user_id=request.user.id)
     user_spaces_ids = user_spaces.values_list('id', flat=True)
 
