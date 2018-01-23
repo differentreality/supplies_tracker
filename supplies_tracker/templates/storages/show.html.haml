@@ -21,7 +21,15 @@
               .fa.fa-plus
               Add existing Item
         .text-muted
-          ({{ storage.space.name}})
+          .fa.fa-map-marker
+          = storage.space.name
+          = '- the remaining items in the fridge cost you'
+          {{ items_cost.price_bought__sum }}
+          euro.
+          {{ items_reimbursement }}
+          - if items_reimbursement.reimbursement_sum > 0
+            You will be reimbursed with
+            euro.
   .row
     .col-md-12
       %table.datatable.table.table-striped.table-hover#spaces-table
