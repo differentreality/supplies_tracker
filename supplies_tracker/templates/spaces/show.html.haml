@@ -18,9 +18,10 @@
             = space.address
   .row
     .col-md-12
-        %h2
-          Available storages
-          ({{ storages.count }})
+      - include '_map.html.haml' with address=space.address
+      %h2
+        Available storages
+        ({{ storages.count }})
 
       - if storages
         .well

@@ -36,6 +36,9 @@
             %a{ href: "{% url 'signup' %}" } Sign up
         - else
           %li
+            %a{ href: '/admin'}
+              Admin
+          %li
             %a{ href: "{% url 'logout' %}" }
               Logout
           %li
