@@ -135,9 +135,16 @@ def storages_index(request):
 def storages_show(request, storage_id):
     try:
         storage = Storage.objects.get(id=storage_id)
-        items = Items_Storage.objects.filter(storage_id=storage_id)
-        items_cost_sum = storage.item.aggregate(Sum('price_bought'))
-        items_reimbursement_sum = storage.item.aggregate(Sum('reimbursement'))
+        items_storage = Items_Storage.objects.filter(storage_id=storage_id)
+
+        items_cost_sum = 0
+        items_reimbursement_sum = 0
+        for storage_item in items_storage:
+            items_cost_sum += int(storage_item.quantity or 0) * float(storage_item.item.price_bought or 0)
+            items_reimbursement_sum += int(storage_item.quantity or 0) * float(storage_item.item.reimbursement or 0)
+
+        # # items_cost_sum = storage.item.aggregate(Sum('price_bought'))
+        # items_reimbursement_sum = storage.item.aggregate(Sum('reimbursement'))
 
     except Storage.DoesNotExist:
         storage = None
@@ -147,10 +154,10 @@ def storages_show(request, storage_id):
         return render(request, 'error.html.haml' )
     else:
       if request.user.is_anonymous:
-          return render(request, 'storages/public.html.haml', { 'storage': storage, 'items': items })
+          return render(request, 'storages/public.html.haml', { 'storage': storage, 'items_storage': items_storage })
       else:
           return render(request, 'storages/show.html.haml', { 'storage': storage,
-                                                              'items': items,
+                                                              'items_storage': items_storage,
                                                               'items_cost': items_cost_sum,
                                                               'items_reimbursement': items_reimbursement_sum })
 
