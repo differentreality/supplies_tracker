@@ -10,18 +10,18 @@
           Items in
           = storage.name
           .btn-group-vertical#storage-sums
-            - if items_cost.price_bought__sum > 0
+            - if items_cost > 0
               %label.btn.btn-warning
                 .fa.fa-tag
                 Cost
-                %b {{ items_cost.price_bought__sum|floatformat:2 }}
-                euro.
-            - if items_reimbursement.reimbursement__sum > 0
+                %b {{ items_cost|floatformat:2 }}
+                euro
+            - if items_reimbursement > 0
               %label.btn.btn-success
                 .fa.fa-tags
                 Reimbursement
-                %b {{ items_reimbursement.reimbursement__sum|floatformat:2 }}
-                euro.
+                %b {{ items_reimbursement|floatformat:2 }}
+                euro
 
           .btn-group.pull-right
             %a.btn.btn-primary{ href: "{% url 'storages_update' storage.id%}" }
@@ -52,7 +52,7 @@
           %th Actions
 
         %tbody
-          - for item_storage in items
+          - for item_storage in items_storage
             %tr
               %td=forloop.counter
                 %td=
