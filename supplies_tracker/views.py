@@ -281,19 +281,11 @@ def login(request):
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
-            if user.is_active:
-                auth_login(request, user)
-                # Redirect to a success page.
-                return render(request, 'home.html.haml')
-            else:
-                # Return a 'disabled account' error message
-                return render(request, 'home.html.haml')
-        else:
-            # Return an 'invalid login' error message.
-            return render(request, 'home.html.haml')
-    else:
-        form = LoginForm()
+            auth_login(request, user)
+            # Redirect to a success page.
+            return redirect('home')
 
+    form = LoginForm()
     return render(request, 'login.html.haml', { 'form': form })
 
 class UserUpdate(LoginRequiredMixin, UpdateView):
