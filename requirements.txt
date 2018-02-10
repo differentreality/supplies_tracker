@@ -1,3 +1,4 @@
+django==1.11.8
 django-bootstrap-static==3.3.7.2
 django-bootstrap-form==3.3
 django-datatable==0.3.1
