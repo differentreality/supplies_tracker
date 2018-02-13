@@ -24,7 +24,7 @@ DEBUG = True
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "SECRET" if DEBUG else os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = ['localhost', 'suppliestracker.pythonanywhere.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1'] if DEBUG else ['suppliestracker.pythonanywhere.com']
 
 # Application definition
 
