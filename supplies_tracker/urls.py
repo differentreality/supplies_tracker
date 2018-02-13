@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url,include
+from django.conf.urls import url, include
 from django.contrib import admin
 from . import views
 from supplies_tracker import views as supplies_tracker_views
@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 # from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
-from django.conf import  settings
+from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -35,7 +35,8 @@ urlpatterns = [
     url(r'^items/(?P<pk>[0-9]+)/delete/$', views.ItemDelete.as_view(), name='items_delete'),
 
     url(r'^storages/items/add/(?P<item_id>[0-9]+)/', views.items_add_to_storage, name='items_add_to_storage'),
-    url(r'^storages/(?P<storage_id>[0-9]+)/items/(?P<item_id>[0-9]+)/insert', views.items_add_existing_storage, name='items_add_existing_storage'),
+    url(r'^storages/(?P<storage_id>[0-9]+)/items/(?P<item_id>[0-9]+)/insert', views.items_add_existing_storage,
+        name='items_add_existing_storage'),
 
     url(r'^storages/(?P<storage_id>[0-9]+)/add_item/(?P<item_id>[0-9]+)/$', views.add_item, name='add_item'),
     url(r'^storages/(?P<storage_id>[0-9]+)/remove_item/(?P<item_id>[0-9]+)/$', views.remove_item, name='remove_item'),
@@ -54,11 +55,11 @@ urlpatterns = [
     url(r'^spaces/(?P<pk>[0-9]+)/delete/$', views.SpaceDelete.as_view(), name='spaces_delete'),
 
     url(r'^login/$', supplies_tracker_views.login, name='login'),
-    url(r'^logout/$', auth_views.logout, { 'next_page': 'login' }, name='logout'),
+    url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     url(r'^signup/$', supplies_tracker_views.signup, name='signup'),
     url(r'^users/(?P<user_id>[0-9]+)/$', views.users_show, name='users_show'),
     url(r'^users/(?P<pk>[0-9]+)/edit$', views.UserUpdate.as_view(), name='user_update'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
