@@ -58,7 +58,7 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     url(r'^signup/$', supplies_tracker_views.signup, name='signup'),
     url(r'^users/(?P<user_id>[0-9]+)/$', views.users_show, name='users_show'),
-    url(r'^users/(?P<pk>[0-9]+)/edit$', views.UserUpdate.as_view(), name='user_update'),
+    url(r'^users/edit$', views.UserUpdate.as_view(), name='user_update'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

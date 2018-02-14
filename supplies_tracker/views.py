@@ -321,10 +321,15 @@ class UserUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'users/edit.html.haml'
     success_url = reverse_lazy('users_show')
 
-    def get_success_url(self):
-        user_id = self.kwargs['pk']
-        return reverse_lazy('users_show', kwargs={'user_id': user_id})
+    def get_object(self):
+        """
+        Only return the User object that belongs to the logged-in User
+        """
+        return self.request.user
 
+    def get_success_url(self):
+        user_id = self.request.user.pk
+        return reverse_lazy('users_show', kwargs={'user_id': user_id} )
 
 @login_required
 def items_add_to_storage(request, item_id):
