@@ -1,22 +1,19 @@
-from django.shortcuts import render
+from itertools import chain
+
 from django.http import HttpResponseRedirect
-from .models import Item, Storage, Space, Items_Storage
-from .forms import item_form, storage_form, space_form, SignUpForm, LoginForm, space_dropdown_form
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout, authenticate
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.urlresolvers import reverse_lazy
-from django.views import generic
-from django.core.urlresolvers import reverse_lazy
-from django.contrib.auth.models import User
-from django.urls import reverse
-from django.db.models import Q
-from itertools import chain
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Sum
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse_lazy
+from django.db.models import Q
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.views.generic.edit import UpdateView, DeleteView
+
+from .models import Item, Storage, Space, Items_Storage
+from .forms import ItemForm, StorageForm, SpaceForm, SignUpForm, LoginForm, SpaceDropdownForm
 
 
 # @login_required
@@ -90,7 +87,7 @@ def items_new(request):
     if 'storage_id' in request.GET:
         storage_id = request.GET['storage_id']
     if request.method == 'POST':
-        form = item_form(request.POST, request.FILES)
+        form = ItemForm(request.POST, request.FILES)
         if form.is_valid():
             obj = Item(**form.cleaned_data)
             obj.user = request.user
@@ -104,7 +101,7 @@ def items_new(request):
             else:
                 return HttpResponseRedirect(reverse('items_index'))
     else:
-        form = item_form()
+        form = ItemForm()
         return render(request, 'items/new.html.haml', {'form': form})
 
 
@@ -131,13 +128,13 @@ def storages_index(request):
         else:
             storages = Storage.objects.filter(space_id=selected_space_id)
         if request.user is not None:
-            form = space_dropdown_form(user=request.user)
+            form = SpaceDropdownForm(user=request.user)
             form.fields['space_id'].initial = selected_space_id
     # else this is the index
     else:
         storages = Storage.objects.filter(space_id__in=user_spaces_ids)
 
-        form = space_dropdown_form(user=request.user)
+        form = SpaceDropdownForm(user=request.user)
         selected_space_id = None
 
     return render(request, 'storages/index.html.haml', {'storages': storages,
@@ -184,7 +181,7 @@ def storages_new(request, space_id=None):
         space = Space.objects.get(id=space_id)
 
     if request.method == 'POST':
-        form = storage_form(None, request.POST, request.FILES)
+        form = StorageForm(None, request.POST, request.FILES)
         if form.is_valid():
             obj = Storage(**form.cleaned_data)
             if space_id is None:
@@ -198,9 +195,9 @@ def storages_new(request, space_id=None):
             return HttpResponseRedirect(reverse('spaces_show', kwargs={'space_id': space_id}))
     else:
         if space_id is None:
-            form = storage_form(user=request.user)
+            form = StorageForm(user=request.user)
         else:
-            form = storage_form(None, None)
+            form = StorageForm(None, None)
 
     return render(request, 'storages/new.html.haml', {'form': form, 'space': space})
 
@@ -233,7 +230,7 @@ def spaces_show(request, space_id):
 @login_required
 def spaces_new(request):
     if request.method == 'POST':
-        form = space_form(request.POST, request.FILES)
+        form = SpaceForm(request.POST, request.FILES)
         if form.is_valid():
             obj = Space(**form.cleaned_data)
             obj.user = request.user
@@ -241,7 +238,7 @@ def spaces_new(request):
 
             return HttpResponseRedirect('/spaces')
     else:
-        form = space_form()
+        form = SpaceForm()
 
     return render(request, 'spaces/new.html.haml', {'form': form})
 
@@ -342,14 +339,14 @@ def items_add_to_storage(request, item_id):
         else:
             storages = Storage.objects.filter(space_id=selected_space_id)
         if request.user is not None:
-            form = space_dropdown_form(user=request.user)
+            form = SpaceDropdownForm(user=request.user)
             form.fields['space_id'].initial = selected_space_id
 
     # else this is the index
     else:
         storages = Storage.objects.filter(space_id__in=user_spaces_ids)
         if request.user is not None:
-            form = space_dropdown_form(user=request.user)
+            form = SpaceDropdownForm(user=request.user)
         selected_space_id = None
     return render(request, 'storages/index.html.haml', {'storages': storages,
                                                         'user_spaces': user_spaces,
