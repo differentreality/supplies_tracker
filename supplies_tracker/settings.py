@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY') if DEBUG else "SECRET"
+SECRET_KEY = "SECRET" if DEBUG else os.environ.get('SECRET_KEY')
 
 ALLOWED_HOSTS = ['localhost', 'suppliestracker.pythonanywhere.com']
 
