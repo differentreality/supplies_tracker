@@ -40,7 +40,7 @@ call_command('makemigrations')
 call_command('migrate')
 
 # Create Test User
-user = User.objects.create_user('testuser', 'test@test.com', 'password')
+user = User.objects.create_superuser('testuser', 'test@test.com', 'password')
 
 # Create Spaces
 house = Space.objects.create(
