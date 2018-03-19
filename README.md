@@ -1,7 +1,7 @@
 # supplies_tracker
 Django project for tracking home and office supplies
 
-![](http://cutmypic.com/uploads/title14657817.png)
+![](https://paste.opensuse.org/images/45182890.png)
 
 # What is Supplies Tracker ?
 Supplies tracker is a Django Web Application designed to help people track their supplies in a specific place. The main purpose is to automate the subtraction procedure of Ιtems in Spaces where people interact.
